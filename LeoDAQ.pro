@@ -41,3 +41,7 @@ FORMS    += form/mainwindow.ui \
     form/hv.ui \
     form/scaler.ui \
     form/tdc.ui
+
+QMAKE_CXXFLAGS += -std=c++0x -DLINUX
+
+LIBS += -lCAENVME

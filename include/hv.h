@@ -23,6 +23,13 @@ private:
     Ui::hv *ui;
     HVModule *module;
 
+    void makeItNice();
+
+    void updateBaseAddress(int rotSw);
+    void updateVMAX();
+    void updateIMAX();
+
+
 };
 
 #endif // HV_H

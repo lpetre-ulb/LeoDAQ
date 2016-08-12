@@ -1,6 +1,9 @@
 #ifndef HVMODULE_H
 #define HVMODULE_H
 
+#include <QString>
+#include <CAENVMElib.h>
+
 class HVModule
 {
 private:
@@ -10,7 +13,13 @@ private:
     int baseAddress;
 
 public:
-    HVModule(int handleChef_, int baseAddress_);
+    HVModule(int handleChef_);
+    QString setBaseAddress(int baseAddress_);
+    QString getBoardModel();
+    CVErrorCodes getVMAX(u_int16_t* value16);
+    CVErrorCodes getIMAX(u_int16_t* value16);
+
+
 };
 
 #endif // HVMODULE_H

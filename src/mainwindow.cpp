@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
+#include <CAENVMElib.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,9 +15,12 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setFixedSize(this->size());
 
 
-    hvWidget = new hv(this, 1234);
-    scalerWidget = new scaler(this, 1234);
-    tdcWidget = new tdc(this, 1234);
+    connectToVMECrate();
+
+
+    hvWidget = new hv(this, handleChef);
+    scalerWidget = new scaler(this, handleChef);
+    tdcWidget = new tdc(this, handleChef);
 
     // add the tabs for the program
     ui->tabWidget->addTab(hvWidget, "HV");
@@ -25,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // set the starting tab index
     ui->tabWidget->setCurrentIndex(0); // HV
+
 
 
 
@@ -40,6 +45,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::closing()
 {
+    CAENVME_End(handleChef);
     qApp->quit();
 }
 
@@ -53,5 +59,25 @@ void MainWindow::closeEvent(QCloseEvent *event)
         QMessageBox::Yes
     );
 
-    if (resBtn == QMessageBox::Yes) closing();
+    if (resBtn == QMessageBox::Yes) {
+        event->accept();
+        closing();
+    }
+}
+
+void MainWindow::connectToVMECrate()
+{
+    while (CAENVME_Init(cvV1718, 0, 0, &handleChef) != cvSuccess) {
+        QMessageBox::StandardButton resBtn = QMessageBox::question(
+            this,
+            "Error",
+            tr("Impossible to connect to VME crate!\nPlease, check that the usb cable is connected. If it is connected, check if it is seen in /etc/usb/\nTry again ?"),
+            QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
+            QMessageBox::Yes
+        );
+
+        if (resBtn != QMessageBox::Yes) {
+            throw std::runtime_error("Failed to connect to VME crate");
+        }
+    }
 }

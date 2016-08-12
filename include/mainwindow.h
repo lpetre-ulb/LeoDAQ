@@ -22,9 +22,14 @@ public:
 
     void closing();
     void closeEvent (QCloseEvent *event);
+    void connectToVMECrate();
+
 
 private:
     Ui::MainWindow *ui;
+
+    // handle to VME Crate
+    int32_t handleChef;
 
     // tab widgets
     hv* hvWidget;
