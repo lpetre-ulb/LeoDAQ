@@ -2,6 +2,7 @@
 #define HV_H
 
 #include <QWidget>
+#include <QTimer>
 #include "hvmodule.h"
 
 namespace Ui {
@@ -20,14 +21,26 @@ private slots:
     void on_spinBox_hv_rotary_switches_valueChanged(int rotSw);
 
 private:
+    // user interface
     Ui::hv *ui;
+
+    // instance of corresponding module
     HVModule *module;
 
+    // utils
     void makeItNice();
+    void launchTimer(int interval);
 
+
+    // memthods
     void updateBaseAddress(int rotSw);
     void updateVMAX();
     void updateIMAX();
+    void updateUI();
+
+    // members
+    QTimer* timer;
+
 
 
 };

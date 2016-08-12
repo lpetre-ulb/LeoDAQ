@@ -11,16 +11,28 @@ hv::hv(QWidget *parent, int handleChef_) :
     // change cosmetics
     makeItNice();
 
-
-
-
-
     // build the corresponding module
     module = new HVModule(handleChef_);
     updateBaseAddress(ui->spinBox_hv_rotary_switches->value());
     updateVMAX();
     updateIMAX();
 
+    launchTimer(1000);
+
+}
+
+void hv::launchTimer(int interval)
+{
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(updateUI()));
+    updateUI();
+    timer->start(1000); //time specified in ms
+}
+
+void hv::updateUI() {
+    updateVMAX();
+    updateIMAX();
+    //updateHV();
 }
 
 void hv::makeItNice()
