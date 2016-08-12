@@ -12,7 +12,7 @@ class tdc : public QWidget
     Q_OBJECT
 
 public:
-    explicit tdc(QWidget *parent = 0);
+    explicit tdc(QWidget *parent = 0, int handleChef_ = 0);
     ~tdc();
 
 private:

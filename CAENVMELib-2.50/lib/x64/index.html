@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>My First JavaScript</h1>
+
+<button type="button"
+onclick="document.getElementById('demo').innerHTML = Date()">
+Click me to display Date and Time.</button>
+
+<p id="demo"></p>
+
+</body>
+<script>
+/* import js-ctypes */
+var {Cu} = require("chrome");
+var {ctypes} = Cu.import("resource://gre/modules/ctypes.jsm", null);
+
+/* Open the library */
+try {
+  /* Linux */
+  var libc = ctypes.open("libc.so.6");
+} catch (e) {
+  /* Most other Unixes */
+  libc = ctypes.open("libc.so");
+}
+
+/* Import a function */
+var puts = libc.declare("puts",             /* function name */
+                        ctypes.default_abi, /* call ABI */
+                        ctypes.int,         /* return type */
+                        ctypes.char.ptr);   /* argument type */
+
+var ret = puts("Hello World from js-ctypes!");
+
+libc.close();
+</script>
+</html> 

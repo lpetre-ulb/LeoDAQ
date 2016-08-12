@@ -12,7 +12,7 @@ class scaler : public QWidget
     Q_OBJECT
 
 public:
-    explicit scaler(QWidget *parent = 0);
+    explicit scaler(QWidget *parent = 0, int handleChef_ = 0);
     ~scaler();
 
 private:
