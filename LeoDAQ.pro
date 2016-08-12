@@ -42,6 +42,8 @@ FORMS    += form/mainwindow.ui \
     form/scaler.ui \
     form/tdc.ui
 
+RESOURCES += data/resources.qrc
+
 QMAKE_CXXFLAGS += -std=c++0x -DLINUX
 
 LIBS += -lCAENVME

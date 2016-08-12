@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>grey.png</file>
+        <file>green.png</file>
+        <file>red.png</file>
+        <file>orange.png</file>
+        <file>lightgreen.png</file>
+        <file>lightorange.png</file>
+        <file>lightred.png</file>
+        <file>Danger_High_Voltage_JE23_ANSI.jpg</file>
+    </qresource>
+</RCC>

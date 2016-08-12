@@ -26,7 +26,7 @@ void hv::launchTimer(int interval)
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateUI()));
     updateUI();
-    timer->start(1000); //time specified in ms
+    timer->start(interval); //time specified in ms
 }
 
 void hv::updateUI() {
@@ -43,7 +43,7 @@ void hv::makeItNice()
 
 hv::~hv()
 {
-    delete module;
+    //delete module;
     delete ui;
 }
 
@@ -60,7 +60,12 @@ void hv::updateBaseAddress(int rotSw)
     // to check if connection is possible
     QString boardModel = module->setBaseAddress(rotSw);
     ui->lineEdit_hv_board_model->setText(boardModel);
-
+    if (boardModel != "UNKNOWN") {
+        ui->widget_hv_configuration->setEnabled(true);
+    }
+    else {
+        ui->widget_hv_configuration->setEnabled(false);
+    }
 }
 
 void hv::updateVMAX() {

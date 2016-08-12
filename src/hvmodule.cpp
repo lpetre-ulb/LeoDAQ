@@ -24,7 +24,6 @@ CVErrorCodes HVModule::getIMAX(u_int16_t* value16) {
 
 QString HVModule::getBoardModel()
 {
-
     u_int16_t value16;
     // read board parameters
     QString model;

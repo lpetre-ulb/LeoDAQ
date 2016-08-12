@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Muon DAQ       
+Comment=Launch the software for the Muon Experiments
+Exec=/usr/local/bin/MuonDAQ/MuonDAQ
+Icon=/usr/local/MuonDAQ/iconMuonDAQ.png
+Terminal=false
+Type=Application
+Categories=Utility;Application;
