@@ -21,18 +21,150 @@ hv::hv(QWidget *parent, int handleChef_) :
 
 }
 
-void hv::launchTimer(int interval)
+void hv::launchTimer(int interval_)
 {
+    interval = interval_;
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateUI()));
     updateUI();
     timer->start(interval); //time specified in ms
 }
 
-void hv::updateUI() {
+void hv::pauseTimer()
+{
+    timer->stop();
+    qDebug() << "Timer is paused";
+}
+
+void hv::restartTimer()
+{
+    timer->start(interval);
+    qDebug() << "Timer is restarted";
+}
+
+void hv::updateUI()
+{
     updateVMAX();
     updateIMAX();
-    //updateHV();
+    updateHV();
+}
+
+void hv::updateHV()
+{
+
+    ui->lcdNumber_hv_voltage_ch_0->display(module->getVoltage(0));
+    ui->lcdNumber_hv_current_ch_0->display(module->getCurrent(0));
+
+    ui->lcdNumber_hv_voltage_ch_1->display(module->getVoltage(1));
+    ui->lcdNumber_hv_current_ch_1->display(module->getCurrent(1));
+
+    ui->lcdNumber_hv_voltage_ch_2->display(module->getVoltage(2));
+    ui->lcdNumber_hv_current_ch_2->display(module->getCurrent(2));
+
+    ui->lcdNumber_hv_voltage_ch_3->display(module->getVoltage(3));
+    ui->lcdNumber_hv_current_ch_3->display(module->getCurrent(3));
+
+    ui->lcdNumber_hv_voltage_ch_4->display(module->getVoltage(4));
+    ui->lcdNumber_hv_current_ch_4->display(module->getCurrent(4));
+
+    ui->lcdNumber_hv_voltage_ch_5->display(module->getVoltage(5));
+    ui->lcdNumber_hv_current_ch_5->display(module->getCurrent(5));
+
+    bool hvOn = false;
+
+    u_int16_t chStatus;
+    chStatus = module->getChStatus(0);
+    hvOn = hvOn || (chStatus & (0x1 << 0));
+    ui->label_hv_state_led_ch_0->setPixmap(chStatus & (0x1 << 0) ? QPixmap(":/green.png") : QPixmap(":/lightgreen.png"));
+    ui->label_hv_ramp_up_led_ch_0->setPixmap(chStatus & (0x1 << 1) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_ramp_down_led_ch_0->setPixmap(chStatus & (0x1 << 2) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_over_current_led_ch_0->setPixmap(chStatus & (0x1 << 3) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_over_voltage_led_ch_0->setPixmap(chStatus & (0x1 << 4) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_under_voltage_led_ch_0->setPixmap(chStatus & (0x1 << 5) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_maxv_led_ch_0->setPixmap(chStatus & (0x1 << 6) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_maxi_led_ch_0->setPixmap(chStatus & (0x1 << 7) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_trip_led_ch_0->setPixmap(chStatus & (0x1 << 8) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_over_power_led_ch_0->setPixmap(chStatus & (0x1 << 9) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_disabled_led_ch_0->setPixmap(chStatus & (0x1 << 11) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_interlock_led_ch_0->setPixmap(chStatus & (0x1 << 12) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+
+    chStatus = module->getChStatus(1);
+    hvOn = hvOn || (chStatus & (0x1 << 0));
+    ui->label_hv_state_led_ch_1->setPixmap(chStatus & (0x1 << 0) ? QPixmap(":/green.png") : QPixmap(":/lightgreen.png"));
+    ui->label_hv_ramp_up_led_ch_1->setPixmap(chStatus & (0x1 << 1) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_ramp_down_led_ch_1->setPixmap(chStatus & (0x1 << 2) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_over_current_led_ch_1->setPixmap(chStatus & (0x1 << 3) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_over_voltage_led_ch_1->setPixmap(chStatus & (0x1 << 4) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_under_voltage_led_ch_1->setPixmap(chStatus & (0x1 << 5) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_maxv_led_ch_1->setPixmap(chStatus & (0x1 << 6) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_maxi_led_ch_1->setPixmap(chStatus & (0x1 << 7) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_trip_led_ch_1->setPixmap(chStatus & (0x1 << 8) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_over_power_led_ch_1->setPixmap(chStatus & (0x1 << 9) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_disabled_led_ch_1->setPixmap(chStatus & (0x1 << 11) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_interlock_led_ch_1->setPixmap(chStatus & (0x1 << 12) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+
+    chStatus = module->getChStatus(2);
+    hvOn = hvOn || (chStatus & (0x1 << 0));
+    ui->label_hv_state_led_ch_2->setPixmap(chStatus & (0x1 << 0) ? QPixmap(":/green.png") : QPixmap(":/lightgreen.png"));
+    ui->label_hv_ramp_up_led_ch_2->setPixmap(chStatus & (0x1 << 1) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_ramp_down_led_ch_2->setPixmap(chStatus & (0x1 << 2) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_over_current_led_ch_2->setPixmap(chStatus & (0x1 << 3) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_over_voltage_led_ch_2->setPixmap(chStatus & (0x1 << 4) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_under_voltage_led_ch_2->setPixmap(chStatus & (0x1 << 5) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_maxv_led_ch_2->setPixmap(chStatus & (0x1 << 6) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_maxi_led_ch_2->setPixmap(chStatus & (0x1 << 7) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_trip_led_ch_2->setPixmap(chStatus & (0x1 << 8) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_over_power_led_ch_2->setPixmap(chStatus & (0x1 << 9) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_disabled_led_ch_2->setPixmap(chStatus & (0x1 << 11) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_interlock_led_ch_2->setPixmap(chStatus & (0x1 << 12) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+
+    chStatus = module->getChStatus(3);
+    hvOn = hvOn || (chStatus & (0x1 << 0));
+    ui->label_hv_state_led_ch_3->setPixmap(chStatus & (0x1 << 0) ? QPixmap(":/green.png") : QPixmap(":/lightgreen.png"));
+    ui->label_hv_ramp_up_led_ch_3->setPixmap(chStatus & (0x1 << 1) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_ramp_down_led_ch_3->setPixmap(chStatus & (0x1 << 2) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_over_current_led_ch_3->setPixmap(chStatus & (0x1 << 3) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_over_voltage_led_ch_3->setPixmap(chStatus & (0x1 << 4) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_under_voltage_led_ch_3->setPixmap(chStatus & (0x1 << 5) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_maxv_led_ch_3->setPixmap(chStatus & (0x1 << 6) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_maxi_led_ch_3->setPixmap(chStatus & (0x1 << 7) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_trip_led_ch_3->setPixmap(chStatus & (0x1 << 8) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_over_power_led_ch_3->setPixmap(chStatus & (0x1 << 9) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_disabled_led_ch_3->setPixmap(chStatus & (0x1 << 11) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_interlock_led_ch_3->setPixmap(chStatus & (0x1 << 12) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+
+    chStatus = module->getChStatus(4);
+    hvOn = hvOn || (chStatus & (0x1 << 0));
+    ui->label_hv_state_led_ch_4->setPixmap(chStatus & (0x1 << 0) ? QPixmap(":/green.png") : QPixmap(":/lightgreen.png"));
+    ui->label_hv_ramp_up_led_ch_4->setPixmap(chStatus & (0x1 << 1) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_ramp_down_led_ch_4->setPixmap(chStatus & (0x1 << 2) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_over_current_led_ch_4->setPixmap(chStatus & (0x1 << 3) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_over_voltage_led_ch_4->setPixmap(chStatus & (0x1 << 4) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_under_voltage_led_ch_4->setPixmap(chStatus & (0x1 << 5) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_maxv_led_ch_4->setPixmap(chStatus & (0x1 << 6) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_maxi_led_ch_4->setPixmap(chStatus & (0x1 << 7) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_trip_led_ch_4->setPixmap(chStatus & (0x1 << 8) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_over_power_led_ch_4->setPixmap(chStatus & (0x1 << 9) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_disabled_led_ch_4->setPixmap(chStatus & (0x1 << 11) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_interlock_led_ch_4->setPixmap(chStatus & (0x1 << 12) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+
+    chStatus = module->getChStatus(5);
+    hvOn = hvOn || (chStatus & (0x1 << 0));
+    ui->label_hv_state_led_ch_5->setPixmap(chStatus & (0x1 << 0) ? QPixmap(":/green.png") : QPixmap(":/lightgreen.png"));
+    ui->label_hv_ramp_up_led_ch_5->setPixmap(chStatus & (0x1 << 1) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_ramp_down_led_ch_5->setPixmap(chStatus & (0x1 << 2) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_over_current_led_ch_5->setPixmap(chStatus & (0x1 << 3) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_over_voltage_led_ch_5->setPixmap(chStatus & (0x1 << 4) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_under_voltage_led_ch_5->setPixmap(chStatus & (0x1 << 5) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_maxv_led_ch_5->setPixmap(chStatus & (0x1 << 6) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_maxi_led_ch_5->setPixmap(chStatus & (0x1 << 7) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_trip_led_ch_5->setPixmap(chStatus & (0x1 << 8) ? QPixmap(":/orange.png") : QPixmap(":/lightorange.png"));
+    ui->label_hv_over_power_led_ch_5->setPixmap(chStatus & (0x1 << 9) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_disabled_led_ch_5->setPixmap(chStatus & (0x1 << 11) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+    ui->label_hv_interlock_led_ch_5->setPixmap(chStatus & (0x1 << 12) ? QPixmap(":/red.png") : QPixmap(":/lightred.png"));
+
+    ui->label_hv_danger->setEnabled(hvOn);
+
 }
 
 void hv::makeItNice()

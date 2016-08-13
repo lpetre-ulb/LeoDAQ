@@ -46,3 +46,45 @@ QString HVModule::getBoardModel()
         return model;
     }
 }
+
+
+
+double HVModule::getVoltage(int channel)
+{
+    double voltage;
+    if (channel < 0 || channel > 5) voltage = 888888;
+    else {
+        u_int16_t value16;
+        CVErrorCodes res = CAENVME_ReadCycle(handleChef, baseAddress + 0x80 * channel + 0x88, &value16, cvA32_U_DATA, cvD16);
+        if (res != cvSuccess) voltage = 888888;
+        else voltage = value16*0.1;
+    }
+    return voltage;
+}
+
+
+double HVModule::getCurrent(int channel)
+{
+    double current;
+    if (channel < 0 || channel > 5) current = 888888;
+    else {
+        u_int16_t value16;
+        CVErrorCodes res = CAENVME_ReadCycle(handleChef, baseAddress + 0x80 * channel + 0x8C, &value16, cvA32_U_DATA, cvD16);
+        if (res != cvSuccess) current = 888888;
+        else current = value16*0.05;
+    }
+    return current;
+}
+
+u_int16_t HVModule::getChStatus(int channel)
+{
+    u_int16_t status;
+    if (channel < 0 || channel > 5) status = 0xFFFF;
+    else {
+        u_int16_t value16;
+        CVErrorCodes res = CAENVME_ReadCycle(handleChef, baseAddress + 0x80 * channel + 0x8C, &value16, cvA32_U_DATA, cvD16);
+        if (res != cvSuccess) status = 0xFFFF;
+        else status = value16;
+    }
+    return status;
+}

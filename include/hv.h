@@ -15,6 +15,8 @@ class hv : public QWidget
 
 public:
     explicit hv(QWidget *parent = 0, int handleChef_ = 0);
+    void pauseTimer();
+    void restartTimer();
     ~hv();
 
 private slots:
@@ -36,10 +38,12 @@ private:
     void updateBaseAddress(int rotSw);
     void updateVMAX();
     void updateIMAX();
+    void updateHV();
     void updateUI();
 
     // members
     QTimer* timer;
+    int interval;
 
 
 

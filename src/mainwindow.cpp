@@ -81,3 +81,14 @@ void MainWindow::connectToVMECrate()
         }
     }
 }
+
+
+void MainWindow::on_tabWidget_currentChanged(int index)
+{
+    if (ui->tabWidget->currentWidget()->objectName() != "hv") {
+        hvWidget->pauseTimer();
+    }
+    else {
+        hvWidget->restartTimer();
+    }
+}

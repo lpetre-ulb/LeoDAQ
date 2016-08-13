@@ -25,6 +25,9 @@ public:
     void connectToVMECrate();
 
 
+private slots:
+    void on_tabWidget_currentChanged(int index);
+
 private:
     Ui::MainWindow *ui;
 

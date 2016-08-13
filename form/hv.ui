@@ -3382,7 +3382,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QLabel" name="label_high_voltage">
+  <widget class="QLabel" name="label_hv_danger">
    <property name="enabled">
     <bool>false</bool>
    </property>
