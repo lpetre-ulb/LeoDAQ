@@ -23,6 +23,8 @@ private slots:
     void on_spinBox_hv_rotary_switches_valueChanged(int rotSw);
     void updateUI();
 
+    void on_pushButton_hv_set_clicked();
+
 private:
     // user interface
     Ui::hv *ui;

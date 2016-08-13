@@ -88,3 +88,29 @@ u_int16_t HVModule::getChStatus(int channel)
     }
     return status;
 }
+
+void HVModule::setChannel(int ch_, int state_, int voltage_, int current_, int tripTime_, int vMax_, int rampDown_, int rampUp_)
+{
+    uint16_t value16;
+    value16 = state_ ? 0x1 : 0x0;
+    CAENVME_WriteCycle(handleChef, baseAddress + 0x80 * ch_ + 0x90, &value16, cvA32_U_DATA, cvD16);
+
+    value16 = voltage_ * 10;
+    CAENVME_WriteCycle(handleChef, baseAddress + 0x80 * ch_ + 0x80, &value16, cvA32_U_DATA, cvD16);
+
+    value16 = current_ * 20;
+    CAENVME_WriteCycle(handleChef, baseAddress + 0x80 * ch_ + 0x84, &value16, cvA32_U_DATA, cvD16);
+
+    value16 = tripTime_ * 10;
+    CAENVME_WriteCycle(handleChef, baseAddress + 0x80 * ch_ + 0x98, &value16, cvA32_U_DATA, cvD16);
+
+    value16 = vMax_ * 10;
+    CAENVME_WriteCycle(handleChef, baseAddress + 0x80 * ch_ + 0x9C, &value16, cvA32_U_DATA, cvD16);
+
+    value16 = rampDown_;
+    CAENVME_WriteCycle(handleChef, baseAddress + 0x80 * ch_ + 0xA0, &value16, cvA32_U_DATA, cvD16);
+
+    value16 = rampUp_;
+    CAENVME_WriteCycle(handleChef, baseAddress + 0x80 * ch_ + 0xA4, &value16, cvA32_U_DATA, cvD16);
+
+}

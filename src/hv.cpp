@@ -1,6 +1,7 @@
 #include "hv.h"
 #include "ui_hv.h"
 #include "qdebug.h"
+#include <QMessageBox>
 
 hv::hv(QWidget *parent, int handleChef_) :
     QWidget(parent),
@@ -220,4 +221,46 @@ void hv::updateIMAX() {
     else {
         ui->lcdNumber_hv_imax->display(888888);
     }
+}
+
+void hv::on_pushButton_hv_set_clicked()
+{
+    int channel, state, voltage, current, tripTime, vMax, rampDown, rampUp;
+    channel = ui->spinBox_hv_channel->value();
+    state = ui->radioButton_hv_on_off->isChecked();
+    voltage = ui->spinBox_hv_voltage->value();
+    current = ui->spinBox_hv_current->value();
+    tripTime = ui->spinBox_hv_trip_time->value();
+    vMax = ui->spinBox_hv_vmax->value();
+    rampDown = ui->spinBox_hv_ramp_down->value();
+    rampUp = ui->spinBox_hv_ramp_up->value();
+
+    if (channel == -1) {
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(
+            this,
+            "Confirmation",
+            "Are you sure you want to set all the channels ?",
+            QMessageBox::Yes|QMessageBox::No
+        );
+
+        if (reply == QMessageBox::No) return;
+
+    }
+
+    if (channel < -1 || channel > 5) {
+         qDebug() << "Impossible channel";
+    }
+    else {
+        int start = channel;
+        int end = channel+1;
+        if (channel == -1) {
+            start = 0;
+            end = 6;
+        }
+        for (int i = start; i < end; ++i) {
+            module->setChannel(i, state, voltage, current, tripTime, vMax, rampDown, rampUp);
+        }
+    }
+
 }

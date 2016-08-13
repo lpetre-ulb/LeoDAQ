@@ -3208,7 +3208,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QSpinBox" name="spinBox_channel">
+      <widget class="QSpinBox" name="spinBox_hv_channel">
        <property name="specialValueText">
         <string>all</string>
        </property>
@@ -3222,7 +3222,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="pushButton_set">
+   <widget class="QPushButton" name="pushButton_hv_set">
     <property name="geometry">
      <rect>
       <x>220</x>
@@ -3253,7 +3253,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QSpinBox" name="spinBox_voltage">
+      <widget class="QSpinBox" name="spinBox_hv_voltage">
        <property name="maximum">
         <number>1300</number>
        </property>
@@ -3267,7 +3267,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QSpinBox" name="spinBox_current">
+      <widget class="QSpinBox" name="spinBox_hv_current">
        <property name="maximum">
         <number>2000</number>
        </property>
@@ -3284,7 +3284,7 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QSpinBox" name="spinBox_trip_time">
+      <widget class="QSpinBox" name="spinBox_hv_trip_time">
        <property name="value">
         <number>10</number>
        </property>
@@ -3298,7 +3298,7 @@
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QSpinBox" name="spinBox_vmax">
+      <widget class="QSpinBox" name="spinBox_hv_vmax">
        <property name="maximum">
         <number>4000</number>
        </property>
@@ -3315,7 +3315,7 @@
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QSpinBox" name="spinBox_ramp_down">
+      <widget class="QSpinBox" name="spinBox_hv_ramp_down">
        <property name="minimum">
         <number>1</number>
        </property>
@@ -3335,7 +3335,7 @@
       </widget>
      </item>
      <item row="5" column="1">
-      <widget class="QSpinBox" name="spinBox_ramp_up">
+      <widget class="QSpinBox" name="spinBox_hv_ramp_up">
        <property name="minimum">
         <number>1</number>
        </property>
@@ -3368,7 +3368,7 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QRadioButton" name="radioButton_on_off">
+   <widget class="QRadioButton" name="radioButton_hv_on_off">
     <property name="geometry">
      <rect>
       <x>130</x>
