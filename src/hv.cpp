@@ -264,3 +264,15 @@ void hv::on_pushButton_hv_set_clicked()
     }
 
 }
+
+void hv::on_radioButton_hv_on_off_clicked()
+{
+    if (ui->radioButton_hv_on_off->isChecked()) {
+        ui->radioButton_hv_on_off->setText("ON");
+        ui->label_state_led->setPixmap(QPixmap(":/green.png"));
+    }
+    else {
+        ui->radioButton_hv_on_off->setText("OFF");
+        ui->label_state_led->setPixmap(QPixmap(":/grey.png"));
+    }
+}

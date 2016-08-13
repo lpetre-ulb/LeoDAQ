@@ -25,6 +25,8 @@ private slots:
 
     void on_pushButton_hv_set_clicked();
 
+    void on_radioButton_hv_on_off_clicked();
+
 private:
     // user interface
     Ui::hv *ui;
