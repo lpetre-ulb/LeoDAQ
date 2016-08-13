@@ -21,6 +21,7 @@ public:
 
 private slots:
     void on_spinBox_hv_rotary_switches_valueChanged(int rotSw);
+    void updateUI();
 
 private:
     // user interface
@@ -39,7 +40,6 @@ private:
     void updateVMAX();
     void updateIMAX();
     void updateHV();
-    void updateUI();
 
     // members
     QTimer* timer;

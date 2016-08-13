@@ -82,7 +82,7 @@ u_int16_t HVModule::getChStatus(int channel)
     if (channel < 0 || channel > 5) status = 0xFFFF;
     else {
         u_int16_t value16;
-        CVErrorCodes res = CAENVME_ReadCycle(handleChef, baseAddress + 0x80 * channel + 0x8C, &value16, cvA32_U_DATA, cvD16);
+        CVErrorCodes res = CAENVME_ReadCycle(handleChef, baseAddress + 0x80 * channel + 0x94, &value16, cvA32_U_DATA, cvD16);
         if (res != cvSuccess) status = 0xFFFF;
         else status = value16;
     }
