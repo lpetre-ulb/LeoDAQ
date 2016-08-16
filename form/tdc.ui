@@ -312,7 +312,7 @@
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="QWidget" name="widget_tdc_channel_" native="true">
+  <widget class="QWidget" name="widget_tdc_channel" native="true">
    <property name="geometry">
     <rect>
      <x>440</x>
@@ -404,7 +404,7 @@
     <string>File</string>
    </property>
   </widget>
-  <widget class="QCustomPlot" name="qcp_tdcss" native="true">
+  <widget class="QCustomPlot" name="qcp_tdc" native="true">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -442,7 +442,7 @@
    <widget class="QSpinBox" name="spinBox_tdc_rotary_switches">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>170</x>
       <y>25</y>
       <width>61</width>
       <height>24</height>
@@ -468,7 +468,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>60</y>
+      <y>90</y>
       <width>99</width>
       <height>27</height>
      </rect>
@@ -547,6 +547,32 @@
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>60</y>
+      <width>101</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Firmware Rev.</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_tdc_firwmare_revision">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>55</y>
+      <width>113</width>
+      <height>27</height>
+     </rect>
     </property>
    </widget>
   </widget>

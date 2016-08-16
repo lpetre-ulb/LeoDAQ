@@ -39,7 +39,7 @@ private:
     void launchTimer(int interval);
 
 
-    // memthods
+    // methods
     void updateBaseAddress(int rotSw);
     void updateVMAX();
     void updateIMAX();

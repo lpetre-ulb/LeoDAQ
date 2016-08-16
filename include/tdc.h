@@ -18,6 +18,9 @@ public:
     explicit tdc(QWidget *parent = 0, int handleChef_ = 0);
     ~tdc();
 
+private slots:
+    void on_spinBox_tdc_rotary_switches_valueChanged(int rotSw);
+
 private:
     Ui::tdc *ui;
 
@@ -25,6 +28,12 @@ private:
     TDCModule *module;
 
     histogram *hTDC;
+
+
+    void updateBaseAddress(int rotSw);
+    void enabledTDCUi(bool enable);
+
+
 };
 
 #endif // TDC_H

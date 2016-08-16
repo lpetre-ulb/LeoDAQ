@@ -37,15 +37,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    delete hvWidget;
-    delete scalerWidget;
-    delete tdcWidget;
     delete ui;
 }
 
 void MainWindow::closing()
 {
+    qDebug() << "Still good";
     CAENVME_End(handleChef);
+
     qApp->quit();
 }
 

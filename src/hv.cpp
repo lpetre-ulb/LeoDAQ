@@ -177,7 +177,9 @@ void hv::makeItNice()
 
 hv::~hv()
 {
-    //delete module;
+    pauseTimer();
+    delete timer;
+    delete module;
     delete ui;
 }
 
