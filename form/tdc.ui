@@ -347,7 +347,7 @@
      <string>Start Ch.</string>
     </property>
    </widget>
-   <widget class="QSpinBox" name="spinBox_tdc_start_">
+   <widget class="QSpinBox" name="spinBox_tdc_start">
     <property name="geometry">
      <rect>
       <x>90</x>
@@ -357,7 +357,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QSpinBox" name="spinBox_tdc_stop_">
+   <widget class="QSpinBox" name="spinBox_tdc_stop">
     <property name="geometry">
      <rect>
       <x>90</x>

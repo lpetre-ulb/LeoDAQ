@@ -21,6 +21,12 @@ public:
 private slots:
     void on_spinBox_tdc_rotary_switches_valueChanged(int rotSw);
 
+    void on_pushButton_tdc_clear_tdcs_clicked();
+
+    void on_pushButton_tdc_start_run_clicked();
+
+    void on_pushButton_tdc_stop_run_clicked();
+
 private:
     Ui::tdc *ui;
 
@@ -29,7 +35,8 @@ private:
 
     histogram *hTDC;
 
-
+    bool isRunning;
+    bool isEnabledTDCUi;
     void updateBaseAddress(int rotSw);
     void enabledTDCUi(bool enable);
 
