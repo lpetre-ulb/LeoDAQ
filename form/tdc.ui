@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QWidget" name="widget_3" native="true">
+  <widget class="QWidget" name="widget_tdc_lifetime_statistics" native="true">
    <property name="geometry">
     <rect>
      <x>650</x>
@@ -81,7 +81,7 @@
      <string>Last (µs)</string>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="mean_lifetime_lcdNumber_2">
+   <widget class="QLCDNumber" name="lcdNumber_tdc_mean_lifetime">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -97,7 +97,7 @@
      <number>8</number>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="rms_lifetime_lcdNumber_2">
+   <widget class="QLCDNumber" name="lcdNumber_tdc_rms_lifetime">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -113,7 +113,7 @@
      <number>8</number>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="last_lifetime_lcdNumber_2">
+   <widget class="QLCDNumber" name="lcdNumber_tdc_last_lifetimes">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -130,7 +130,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QLineEdit" name="file_name_lineEdit">
+  <widget class="QLineEdit" name="lineEdit_tdc_file_name">
    <property name="geometry">
     <rect>
      <x>70</x>
@@ -140,7 +140,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="file_name_pushButton">
+  <widget class="QPushButton" name="pushButton_tdc_file_name">
    <property name="geometry">
     <rect>
      <x>520</x>
@@ -153,7 +153,7 @@
     <string>Change</string>
    </property>
   </widget>
-  <widget class="QWidget" name="widget_2" native="true">
+  <widget class="QWidget" name="widget_tdc_event_statistics" native="true">
    <property name="geometry">
     <rect>
      <x>650</x>
@@ -234,7 +234,7 @@
      <string>Total</string>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="rate_lcdNumber_2">
+   <widget class="QLCDNumber" name="lcdNumber_tdc_rate">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -250,7 +250,7 @@
      <number>8</number>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="mean_arrival_lcdNumber_2">
+   <widget class="QLCDNumber" name="lcdNumber_tdc_mean_arrival">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -266,7 +266,7 @@
      <number>8</number>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="rms_arrival_lcdNumber_2">
+   <widget class="QLCDNumber" name="lcdNumber_tdc_rms_arrival">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -282,7 +282,7 @@
      <number>8</number>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="total_lcdNumber_2">
+   <widget class="QLCDNumber" name="lcdNumber_tdc_total">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -312,7 +312,7 @@
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="QWidget" name="tdc_channel_widget" native="true">
+  <widget class="QWidget" name="widget_tdc_channel_" native="true">
    <property name="geometry">
     <rect>
      <x>440</x>
@@ -321,7 +321,7 @@
      <height>121</height>
     </rect>
    </property>
-   <widget class="QLabel" name="label_6">
+   <widget class="QLabel" name="label_tdc_4">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -334,7 +334,7 @@
      <string>Stop Ch.</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_7">
+   <widget class="QLabel" name="label_tdc_3">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -347,7 +347,7 @@
      <string>Start Ch.</string>
     </property>
    </widget>
-   <widget class="QSpinBox" name="tdc_start_spinBox_2">
+   <widget class="QSpinBox" name="spinBox_tdc_start_">
     <property name="geometry">
      <rect>
       <x>90</x>
@@ -357,7 +357,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QSpinBox" name="tdc_stop_spinBox_2">
+   <widget class="QSpinBox" name="spinBox_tdc_stop_">
     <property name="geometry">
      <rect>
       <x>90</x>
@@ -404,7 +404,7 @@
     <string>File</string>
    </property>
   </widget>
-  <widget class="QCustomPlot" name="qcp_TDC" native="true">
+  <widget class="QCustomPlot" name="qcp_tdcss" native="true">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -414,7 +414,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QGroupBox" name="groupBox_3">
+  <widget class="QGroupBox" name="groupBox_tdc_board_panel">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -426,7 +426,7 @@
    <property name="title">
     <string/>
    </property>
-   <widget class="QLabel" name="label_board_rotary_switches_tdc_2">
+   <widget class="QLabel" name="label_tdc_2">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -439,7 +439,7 @@
      <string>Rotary Switches</string>
     </property>
    </widget>
-   <widget class="QSpinBox" name="spinBox_rotary_switches_tdc_2">
+   <widget class="QSpinBox" name="spinBox_tdc_rotary_switches">
     <property name="geometry">
      <rect>
       <x>160</x>
@@ -464,7 +464,7 @@
      <number>16</number>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_clear_tdc_2">
+   <widget class="QPushButton" name="pushButton_tdc_clear_tdcs">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -477,7 +477,7 @@
      <string>Clear TDCs</string>
     </property>
    </widget>
-   <widget class="QLabel" name="board_pannel_label_2">
+   <widget class="QLabel" name="board_tdc_1">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -497,7 +497,7 @@
      <string>Board Panel</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_start_run_2">
+   <widget class="QPushButton" name="pushButton_tdc_start_run">
     <property name="geometry">
      <rect>
       <x>270</x>
@@ -510,7 +510,7 @@
      <string>Run</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_stop_run_2">
+   <widget class="QPushButton" name="pushButton_tdc_stop_run">
     <property name="geometry">
      <rect>
       <x>270</x>
@@ -523,7 +523,7 @@
      <string>Stop</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_clear_bars_2">
+   <widget class="QPushButton" name="pushButton_tdc_clear">
     <property name="geometry">
      <rect>
       <x>270</x>
@@ -550,7 +550,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QWidget" name="tdc_trigger_widget" native="true">
+  <widget class="QWidget" name="widget_tdc_trigger" native="true">
    <property name="geometry">
     <rect>
      <x>650</x>
@@ -605,12 +605,12 @@
      <string>Window Offset (ns)</string>
     </property>
    </widget>
-   <widget class="QSpinBox" name="window_width_spinBox_2">
+   <widget class="QSpinBox" name="spinBox_tdc_window_width">
     <property name="geometry">
      <rect>
       <x>160</x>
       <y>35</y>
-      <width>101</width>
+      <width>91</width>
       <height>27</height>
      </rect>
     </property>
@@ -636,12 +636,12 @@
      <number>10000</number>
     </property>
    </widget>
-   <widget class="QSpinBox" name="window_offset_spinBox_2">
+   <widget class="QSpinBox" name="spinBox_tdc_window_offset">
     <property name="geometry">
      <rect>
       <x>160</x>
       <y>65</y>
-      <width>101</width>
+      <width>91</width>
       <height>27</height>
      </rect>
     </property>
@@ -659,7 +659,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QWidget" name="widget_bar_config" native="true">
+  <widget class="QWidget" name="widget_tdc_histogram_config" native="true">
    <property name="geometry">
     <rect>
      <x>650</x>
@@ -668,7 +668,7 @@
      <height>161</height>
     </rect>
    </property>
-   <widget class="QDoubleSpinBox" name="doubleSpinBox_tmin_2">
+   <widget class="QDoubleSpinBox" name="doubleSpinBox_tdc_tmin">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -719,7 +719,7 @@
      <string>n bins</string>
     </property>
    </widget>
-   <widget class="QSpinBox" name="spinBox_nbins_2">
+   <widget class="QSpinBox" name="spinBox_tdc_nbins">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -738,7 +738,7 @@
      <number>100</number>
     </property>
    </widget>
-   <widget class="QDoubleSpinBox" name="doubleSpinBox_tmax_2">
+   <widget class="QDoubleSpinBox" name="doubleSpinBox_tdc_tmax">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -793,7 +793,7 @@
      <string>Histogram</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="log_pushButton_2">
+   <widget class="QPushButton" name="spushButton_tdc_log">
     <property name="geometry">
      <rect>
       <x>140</x>

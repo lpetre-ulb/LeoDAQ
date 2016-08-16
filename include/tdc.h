@@ -2,6 +2,9 @@
 #define TDC_H
 
 #include <QWidget>
+#include "tdcmodule.h"
+#include "histogram.h"
+
 
 namespace Ui {
 class tdc;
@@ -17,6 +20,11 @@ public:
 
 private:
     Ui::tdc *ui;
+
+    // instance of corresponding module
+    TDCModule *module;
+
+    histogram *hTDC;
 };
 
 #endif // TDC_H

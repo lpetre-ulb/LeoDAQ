@@ -15,6 +15,7 @@ hv::hv(QWidget *parent, int handleChef_) :
     // build the corresponding module
     module = new HVModule(handleChef_);
     updateBaseAddress(ui->spinBox_hv_rotary_switches->value());
+
     updateVMAX();
     updateIMAX();
 
