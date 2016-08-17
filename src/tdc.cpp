@@ -14,6 +14,8 @@ tdc::tdc(QWidget *parent, int handleChef_) :
     module = new TDCModule(handleChef_);
     updateBaseAddress(ui->spinBox_tdc_rotary_switches->value());
 
+    setFileName();
+
     // create the histogram
     hTDC = new histogram(ui->qcp_tdc, "TDC Delta t", "time (ns)", "# events");
     hTDC->adjustPlot(ui->spinBox_tdc_nbins->value(), ui->doubleSpinBox_tdc_tmin->value(), ui->doubleSpinBox_tdc_tmax->value());
@@ -32,12 +34,8 @@ void tdc::updateBaseAddress(int rotSw)
     // to check if connection is possible
     QString fwRev = module->setBaseAddress(rotSw);
     ui->lineEdit_tdc_firwmare_revision->setText(fwRev);
-    if (fwRev != "UNKNOWN") {
-        enabledTDCUi(true);
-    }
-    else {
-        enabledTDCUi(false);
-    }
+
+    enabledTDCUi(fwRev != "UNKNOWN");
 }
 
 void tdc::enabledTDCUi(bool enable)
@@ -81,45 +79,54 @@ void tdc::on_pushButton_tdc_start_run_clicked()
 
 
     QString fileName = ui->lineEdit_tdc_file_name->text();
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Append)) {
+        qDebug() << "Problem opening or creating the file:";
+        qDebug() << fileName;
+    }
+    else {
+        QTextStream stream(&file);
 
 
-    // check config of trigger window and set it
-    if (tdcWindowOffset + tdcWindowWidth < 0) { //1st case: the trigger matching window precedes the trigger arrival
-        if (-tdcWindowOffset > 102375 || tdcWindowOffset == 0) {
+        // check config of trigger window and set it
+        if (tdcWindowOffset + tdcWindowWidth < 0) { //1st case: the trigger matching window precedes the trigger arrival
+            if (-tdcWindowOffset > 102375 || tdcWindowOffset == 0) {
+                qDebug() << "false";
+                return;
+            }
+        }
+        else if (tdcWindowOffset + tdcWindowWidth > 1000) { // 2nd case: the trigger matching is straddling the trigger or delayed with respect to the trigger
             qDebug() << "false";
             return;
         }
-    }
-    else if (tdcWindowOffset + tdcWindowWidth > 1000) { // 2nd case: the trigger matching is straddling the trigger or delayed with respect to the trigger
-        qDebug() << "false";
-        return;
-    }
 
-    bool goodConfig = module->setTriggerMode(tdcWindowWidth, tdcWindowOffset);
-    if (!goodConfig) {
-        qDebug() << "false";
-        return;
-    }
-
-    // set channel
-    module->setStartStopChannels(ui->spinBox_tdc_start->value(), ui->spinBox_tdc_stop->value());
-
-    // reading data
-    resetCounters();
-
-    while (isRunning) {
-        QCoreApplication::processEvents();
-
-        std::vector<int> values;
-        module->readEvents(&values);
-        int nEvents = values.size();
-        if (nEvents > 0) qDebug() << "Number of events: " << nEvents;
-        for (int i = 0; i < nEvents; ++i) {
-            updateStatUiAndPlot(values[i]);
+        bool goodConfig = module->setTriggerMode(tdcWindowWidth, tdcWindowOffset);
+        if (!goodConfig) {
+            qDebug() << "false";
+            return;
         }
 
-    }
+        // set channel
+        module->setStartStopChannels(ui->spinBox_tdc_start->value(), ui->spinBox_tdc_stop->value());
 
+        // reading data
+        resetCounters();
+
+        while (isRunning) {
+            QCoreApplication::processEvents();
+
+            std::vector<int> values;
+            module->readEvents(&values);
+            int nEvents = values.size();
+            if (nEvents > 0) qDebug() << "Number of events: " << nEvents;
+            for (int i = 0; i < nEvents; ++i) {
+                updateStatUiAndPlot(values[i]);
+                stream << QString::number(values[i]) << "\n";
+            }
+
+        }
+    }
+    file.close();
     qDebug() << "Finish run";
     isRunning = false;
 
@@ -289,3 +296,36 @@ void tdc::on_spinBox_tdc_stop_valueChanged(int stopChannel)
     module->setStartStopChannels(ui->spinBox_tdc_start->value(), stopChannel);
 }
 
+void tdc::setFileName()
+{
+     //get current date
+     QDate date = QDate::currentDate();
+     QString dateString = date.toString();
+     qDebug() << dateString.replace(" ", "_");
+
+     //get current time
+     QTime time = QTime::currentTime();
+     QString timeString = time.toString();
+     qDebug() << timeString.replace(":", "_");
+
+     QString fileNameTmp = QStandardPaths::locate(QStandardPaths::DocumentsLocation, QString(), QStandardPaths::LocateDirectory);
+     fileNameTmp += "Data_";
+     fileNameTmp += dateString;
+     fileNameTmp += "_at_";
+     fileNameTmp += timeString;
+     fileNameTmp += ".txt";
+     qDebug() << "This is the location: ";
+     qDebug() << fileNameTmp;
+     ui->lineEdit_tdc_file_name->setText(fileNameTmp);
+
+}
+
+void tdc::on_pushButton_tdc_file_name_clicked()
+{
+    QString fileName = ui->lineEdit_tdc_file_name->text();
+    QString newFileName = QFileDialog::getSaveFileName(this, tr("Save File"), QStandardPaths::locate(QStandardPaths::DocumentsLocation,
+                                       QString(), QStandardPaths::LocateDirectory));
+
+    ui->lineEdit_tdc_file_name->setText(newFileName == "" ? fileName : newFileName);
+
+}

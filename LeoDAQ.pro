@@ -21,7 +21,8 @@ SOURCES += src/main.cpp \
     src/qcustomplot.cpp \
     src/histogram.cpp \
     src/hvmodule.cpp \
-    src/tdcmodule.cpp
+    src/tdcmodule.cpp \
+    src/scalermodule.cpp
 
 OBJECTS_DIR = build/.obj
 MOC_DIR = build/.moc
@@ -37,9 +38,10 @@ HEADERS  += include/mainwindow.h \
     include/qcustomplot.h \
     include/histogram.h \
     include/hvmodule.h \
-    include/tdcmodule.h
+    include/tdcmodule.h \
+    include/scalermodule.h
 
-FORMS    += form/mainwindow.ui \
+FORMS += form/mainwindow.ui \
     form/hv.ui \
     form/scaler.ui \
     form/tdc.ui

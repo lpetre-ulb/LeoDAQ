@@ -42,6 +42,8 @@ private slots:
     void on_spinBox_tdc_stop_valueChanged(int stopChannel);
 
 
+    void on_pushButton_tdc_file_name_clicked();
+
 public:
     bool stillRunning();
     void stopRun();
@@ -72,6 +74,8 @@ private:
     void resetCounters();
     void updateStatUiAndPlot(double difference);
     void clearStatUi();
+    void setFileName();
+
 
 
 

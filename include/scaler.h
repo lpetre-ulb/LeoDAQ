@@ -2,6 +2,8 @@
 #define SCALER_H
 
 #include <QWidget>
+#include "scalermodule.h"
+#include "histogram.h"
 
 namespace Ui {
 class scaler;
@@ -17,6 +19,16 @@ public:
 
 private:
     Ui::scaler *ui;
+
+    //Instance of the corresponding module
+    ScalerModule *module;
+
+    histogram *hScaler;
+
+    void updateBaseAddress(int rotSw);
+    void enabledScalerUi(bool enable);
+
+
 };
 
 #endif // SCALER_H

@@ -196,12 +196,8 @@ void hv::updateBaseAddress(int rotSw)
     // to check if connection is possible
     QString boardModel = module->setBaseAddress(rotSw);
     ui->lineEdit_hv_board_model->setText(boardModel);
-    if (boardModel != "UNKNOWN") {
-        ui->widget_hv_configuration->setEnabled(true);
-    }
-    else {
-        ui->widget_hv_configuration->setEnabled(false);
-    }
+
+    ui->widget_hv_configuration->setEnabled(boardModel != "UNKNOWN");
 }
 
 void hv::updateVMAX() {
