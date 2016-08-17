@@ -71,9 +71,14 @@ void tdc::on_pushButton_tdc_start_run_clicked()
     isRunning = true;
     ui->pushButton_tdc_start_run->setEnabled(!isRunning);
     ui->pushButton_tdc_stop_run->setEnabled(isRunning);
+    ui->widget_tdc_trigger->setEnabled(!isRunning);
+    ui->widget_tdc_histogram_config->setEnabled(!isRunning);
+
 
     u_int16_t tdcWindowWidth = ui->spinBox_tdc_window_width->value();
     int16_t tdcWindowOffset = ui->spinBox_tdc_window_offset->value();
+
+
 
     QString fileName = ui->lineEdit_tdc_file_name->text();
 
@@ -120,6 +125,8 @@ void tdc::on_pushButton_tdc_start_run_clicked()
 
     ui->pushButton_tdc_start_run->setEnabled(!isRunning);
     ui->pushButton_tdc_stop_run->setEnabled(isRunning);
+    ui->widget_tdc_trigger->setEnabled(!isRunning);
+    ui->widget_tdc_histogram_config->setEnabled(!isRunning);
 
 
 

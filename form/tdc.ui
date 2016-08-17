@@ -691,7 +691,7 @@
      <x>650</x>
      <y>150</y>
      <width>271</width>
-     <height>161</height>
+     <height>131</height>
     </rect>
    </property>
    <widget class="QDoubleSpinBox" name="doubleSpinBox_tdc_tmin">
@@ -819,26 +819,6 @@
      <string>Histogram</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_tdc_log">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>125</y>
-      <width>91</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>10</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>Log Scale</string>
-    </property>
-   </widget>
   </widget>
   <widget class="Line" name="line_6">
    <property name="geometry">
@@ -851,6 +831,26 @@
    </property>
    <property name="orientation">
     <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_tdc_log">
+   <property name="geometry">
+    <rect>
+     <x>790</x>
+     <y>275</y>
+     <width>91</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>Log Scale</string>
    </property>
   </widget>
  </widget>

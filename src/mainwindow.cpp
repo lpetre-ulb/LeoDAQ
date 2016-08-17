@@ -30,9 +30,6 @@ MainWindow::MainWindow(QWidget *parent) :
     // set the starting tab index
     ui->tabWidget->setCurrentIndex(0); // HV
 
-
-
-
 }
 
 MainWindow::~MainWindow()
