@@ -49,19 +49,6 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_scaler_pulse">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>130</y>
-     <width>221</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Pulse The Gate</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_scaler_1">
    <property name="geometry">
     <rect>
@@ -80,32 +67,6 @@
    </property>
    <property name="text">
     <string>Board Panel</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_scaler_reset">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>510</y>
-     <width>91</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Reset</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_scaler_update">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>510</y>
-     <width>91</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Update</string>
    </property>
   </widget>
   <widget class="QCustomPlot" name="qcp_scaler" native="true">
@@ -131,20 +92,20 @@
     <string>min</string>
    </property>
   </widget>
-  <widget class="QWidget" name="widget" native="true">
+  <widget class="QWidget" name="widget_scaler_display" native="true">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>230</y>
+     <y>110</y>
      <width>221</width>
-     <height>261</height>
+     <height>521</height>
     </rect>
    </property>
-   <widget class="QLCDNumber" name="scaler_ch7_lcdNumber">
+   <widget class="QLCDNumber" name="lcdNumber_scaler_ch_0">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>220</y>
+      <x>20</x>
+      <y>230</y>
       <width>71</width>
       <height>23</height>
      </rect>
@@ -153,11 +114,63 @@
      <number>6</number>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="scaler_ch2_lcdNumber">
+   <widget class="QPushButton" name="pushButton_scaler_reset">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>70</y>
+      <y>480</y>
+      <width>91</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Reset</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_scaler_update">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>480</y>
+      <width>91</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Update</string>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="progressBar_scaler_pulse">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>170</y>
+      <width>221</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_scaler_pulse">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>130</y>
+      <width>221</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pulse The Gate</string>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_scaler_ch_1">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>260</y>
       <width>71</width>
       <height>23</height>
      </rect>
@@ -166,11 +179,11 @@
      <number>6</number>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="scaler_ch5_lcdNumber">
+   <widget class="QLCDNumber" name="lcdNumber_scaler_ch_2">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>160</y>
+      <x>20</x>
+      <y>290</y>
       <width>71</width>
       <height>23</height>
      </rect>
@@ -179,174 +192,253 @@
      <number>6</number>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="scaler_ch0_lcdNumber">
+   <widget class="QLCDNumber" name="lcdNumber_scaler_ch_3">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>320</y>
+      <width>71</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="digitCount">
+     <number>6</number>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_scaler_ch_4">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>350</y>
+      <width>71</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="digitCount">
+     <number>6</number>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_scaler_ch_5">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>380</y>
+      <width>71</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="digitCount">
+     <number>6</number>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_scaler_ch_6">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>410</y>
+      <width>71</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="digitCount">
+     <number>6</number>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_scaler_ch_7">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>440</y>
+      <width>71</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="digitCount">
+     <number>6</number>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_scaler_ch_8">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>230</y>
+      <width>71</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="digitCount">
+     <number>6</number>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_scaler_ch_9">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>260</y>
+      <width>71</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="digitCount">
+     <number>6</number>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_scaler_ch_10">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>290</y>
+      <width>71</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="digitCount">
+     <number>6</number>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_scaler_ch_11">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>320</y>
+      <width>71</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="digitCount">
+     <number>6</number>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_scaler_ch_12">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>350</y>
+      <width>71</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="digitCount">
+     <number>6</number>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_scaler_ch_13">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>380</y>
+      <width>71</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="digitCount">
+     <number>6</number>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_scaler_ch_14">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>410</y>
+      <width>71</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="digitCount">
+     <number>6</number>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdNumber_scaler_ch_15">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>440</y>
+      <width>71</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="digitCount">
+     <number>6</number>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>71</width>
-      <height>23</height>
+      <width>171</width>
+      <height>21</height>
      </rect>
     </property>
-    <property name="digitCount">
-     <number>6</number>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Gate configuration</string>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="scaler_ch6_lcdNumber">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>190</y>
-      <width>71</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="digitCount">
-     <number>6</number>
-    </property>
-   </widget>
-   <widget class="QLCDNumber" name="scaler_ch3_lcdNumber">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>100</y>
-      <width>71</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="digitCount">
-     <number>6</number>
-    </property>
-   </widget>
-   <widget class="QLCDNumber" name="scaler_ch1_lcdNumber">
+   <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>40</y>
-      <width>71</width>
-      <height>23</height>
+      <width>41</width>
+      <height>17</height>
      </rect>
     </property>
-    <property name="digitCount">
-     <number>6</number>
+    <property name="text">
+     <string>width</string>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="scaler_ch4_lcdNumber">
+   <widget class="QSpinBox" name="spinBox_scaler_width">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>130</y>
-      <width>71</width>
-      <height>23</height>
+      <x>70</x>
+      <y>35</y>
+      <width>48</width>
+      <height>27</height>
      </rect>
     </property>
-    <property name="digitCount">
-     <number>6</number>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>255</number>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="scaler_ch11_lcdNumber">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>100</y>
-      <width>71</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="digitCount">
-     <number>6</number>
-    </property>
-   </widget>
-   <widget class="QLCDNumber" name="scaler_ch8_lcdNumber">
+   <widget class="QComboBox" name="comboBox_scaler_unit">
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>10</y>
-      <width>71</width>
-      <height>23</height>
+      <y>35</y>
+      <width>85</width>
+      <height>27</height>
      </rect>
     </property>
-    <property name="digitCount">
-     <number>6</number>
-    </property>
-   </widget>
-   <widget class="QLCDNumber" name="scaler_ch9_lcdNumber">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>40</y>
-      <width>71</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="digitCount">
-     <number>6</number>
-    </property>
-   </widget>
-   <widget class="QLCDNumber" name="scaler_ch10_lcdNumber">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>70</y>
-      <width>71</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="digitCount">
-     <number>6</number>
-    </property>
-   </widget>
-   <widget class="QLCDNumber" name="scaler_ch12_lcdNumber">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>130</y>
-      <width>71</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="digitCount">
-     <number>6</number>
-    </property>
-   </widget>
-   <widget class="QLCDNumber" name="scaler_ch13_lcdNumber">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>160</y>
-      <width>71</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="digitCount">
-     <number>6</number>
-    </property>
-   </widget>
-   <widget class="QLCDNumber" name="scaler_ch14_lcdNumber">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>190</y>
-      <width>71</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="digitCount">
-     <number>6</number>
-    </property>
-   </widget>
-   <widget class="QLCDNumber" name="scaler_ch15_lcdNumber">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>220</y>
-      <width>71</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="digitCount">
-     <number>6</number>
-    </property>
+    <item>
+     <property name="text">
+      <string>25 ns</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>1600 ns</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>410 µs</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>104 ms</string>
+     </property>
+    </item>
    </widget>
   </widget>
   <widget class="QLabel" name="label_7">
@@ -395,19 +487,6 @@
    </property>
    <property name="value">
     <double>100.000000000000000</double>
-   </property>
-  </widget>
-  <widget class="QProgressBar" name="progressBar_scaler_pulse">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>170</y>
-     <width>221</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="value">
-    <number>0</number>
    </property>
   </widget>
   <widget class="QLabel" name="label_9">

@@ -17,6 +17,13 @@ public:
     explicit scaler(QWidget *parent = 0, int handleChef_ = 0);
     ~scaler();
 
+private slots:
+    void on_doubleSpinBox_scaler_cmax_valueChanged(double cMax);
+
+    void on_doubleSpinBox_scaler_cmin_valueChanged(double cMin);
+
+    void on_spinBox_scaler_nbins_valueChanged(int nBins);
+
 private:
     Ui::scaler *ui;
 
@@ -27,6 +34,8 @@ private:
 
     void updateBaseAddress(int rotSw);
     void enabledScalerUi(bool enable);
+    void setPulserMode(unsigned char width, int unitIndex);
+
 
 
 };

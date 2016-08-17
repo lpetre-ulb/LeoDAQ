@@ -15,6 +15,7 @@ private:
 public:
     ScalerModule(int handleChef_);
     QString setBaseAddress(int baseAddress_);
+    void setPulserMode(unsigned char width, CVTimeUnits unit);
 
 private:
     QString getModuleType();
