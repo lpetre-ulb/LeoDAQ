@@ -100,9 +100,11 @@ void TDCModule::readEvents(std::vector<int>* values)
     uint32_t value32;
 
     // read Status register
+    //qDebug() << "Read status register";
     CAENVME_ReadCycle(handleChef, baseAddress + 0x1002, &value16, cvA32_U_DATA, cvD16);
 
     if (value16 & 0x1) {
+        //qDebug() << "Data ready";
         CAENVME_ReadCycle(handleChef, baseAddress + 0x0000, &value32, cvA32_U_DATA, cvD32);
         int header = ((value32 >> 27) & 0x1F);
         if (header == 0x8) { // Global header

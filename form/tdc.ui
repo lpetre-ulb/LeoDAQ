@@ -113,7 +113,7 @@
      <number>8</number>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="lcdNumber_tdc_last_lifetimes">
+   <widget class="QLCDNumber" name="lcdNumber_tdc_last_lifetime">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -819,7 +819,7 @@
      <string>Histogram</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="spushButton_tdc_log">
+   <widget class="QPushButton" name="pushButton_tdc_log">
     <property name="geometry">
      <rect>
       <x>140</x>

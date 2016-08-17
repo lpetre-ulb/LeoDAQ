@@ -7,6 +7,9 @@ tdc::tdc(QWidget *parent, int handleChef_) :
     ui->setupUi(this);
 
 
+    // change cosmetics
+    makeItNice();
+
     // build the corresponding module
     module = new TDCModule(handleChef_);
     updateBaseAddress(ui->spinBox_tdc_rotary_switches->value());
@@ -97,20 +100,82 @@ void tdc::on_pushButton_tdc_start_run_clicked()
     module->setStartStopChannels(ui->spinBox_tdc_start->value(), ui->spinBox_tdc_stop->value());
 
     // reading data
+    resetCounters();
+
     while (isRunning) {
         QCoreApplication::processEvents();
 
         std::vector<int> values;
         module->readEvents(&values);
         int nEvents = values.size();
+        if (nEvents > 0) qDebug() << "Number of events: " << nEvents;
         for (int i = 0; i < nEvents; ++i) {
-            hTDC->updatePlot(values[i]);
+            updateStatUiAndPlot(values[i]);
         }
 
     }
 
+    qDebug() << "Finish run";
+    isRunning = false;
+
+    ui->pushButton_tdc_start_run->setEnabled(!isRunning);
+    ui->pushButton_tdc_stop_run->setEnabled(isRunning);
 
 
+
+}
+
+
+void tdc::updateStatUiAndPlot(double difference)
+{
+    if (difference <= hTDC->getXMax() && difference >= hTDC->getXMin()) {
+        // total number of events
+        counter++;
+        ui->lcdNumber_tdc_total->display(counter);
+
+        // rate estimate
+        QTime currentTime = QTime::currentTime();
+        int timeFromBeginingOfRun = time.msecsTo(currentTime);
+        ui->lcdNumber_tdc_rate->display((int)((counter*1000.0/(timeFromBeginingOfRun))*1000)/1000.0);
+
+        // mean arrival estimate
+        int arrivalTime = prevTime.msecsTo(currentTime);
+        mean_arrival *= (counter-1);
+        mean_arrival_square *= (counter-1);
+        mean_arrival += arrivalTime;
+        mean_arrival_square += arrivalTime*arrivalTime;
+        mean_arrival /= counter;
+        mean_arrival_square /= counter;
+        ui->lcdNumber_tdc_mean_arrival->display((int)(mean_arrival)/1000.0);
+        ui->lcdNumber_tdc_rms_arrival->display((int)sqrt(mean_arrival_square - mean_arrival*mean_arrival)/1000.0);
+
+        // lifetime
+        mean_lifetime *= (counter - 1);
+        mean_lifetime_square *= (counter - 1);
+        mean_lifetime += (difference / 1000.0);
+        mean_lifetime_square += (difference / 1000.0) * (difference / 1000.0);
+        mean_lifetime /= counter;
+        mean_lifetime_square /= counter;
+        ui->lcdNumber_tdc_mean_lifetime->display((int)(mean_lifetime*1000)/1000.0);
+        ui->lcdNumber_tdc_rms_lifetime->display((int)(sqrt(mean_lifetime_square - mean_lifetime*mean_lifetime)*1000)/1000.0);
+        ui->lcdNumber_tdc_last_lifetime->display((int)(difference)/1000.0);
+
+        // plot
+        hTDC->updatePlot(difference);
+        prevTime = currentTime;
+    }
+
+}
+
+void tdc::resetCounters()
+{
+    time = QTime::currentTime();
+    counter = 0;
+    prevTime = time;
+    mean_arrival = 0;
+    mean_arrival_square = 0;
+    mean_lifetime = 0;
+    mean_lifetime_square = 0;
 
 }
 
@@ -118,3 +183,102 @@ void tdc::on_pushButton_tdc_stop_run_clicked()
 {
     if (isRunning) isRunning = false;
 }
+
+void tdc::makeItNice()
+{
+    ui->lcdNumber_tdc_last_lifetime->setPalette(Qt::black);
+    ui->lcdNumber_tdc_mean_arrival->setPalette(Qt::black);
+    ui->lcdNumber_tdc_mean_lifetime->setPalette(Qt::black);
+    ui->lcdNumber_tdc_rate->setPalette(Qt::black);;
+    ui->lcdNumber_tdc_rms_arrival->setPalette(Qt::black);
+    ui->lcdNumber_tdc_rms_lifetime->setPalette(Qt::black);
+    ui->lcdNumber_tdc_total->setPalette(Qt::black);
+}
+
+void tdc::on_spinBox_tdc_nbins_valueChanged(int nBins)
+{
+    hTDC->adjustPlot(nBins, ui->doubleSpinBox_tdc_tmin->value(), ui->doubleSpinBox_tdc_tmax->value());
+}
+
+void tdc::on_doubleSpinBox_tdc_tmin_valueChanged(double tMin)
+{
+    double tMax = ui->doubleSpinBox_tdc_tmax->value();
+    if (tMin >= tMax) return;
+    hTDC->adjustPlot(ui->spinBox_tdc_nbins->value(), tMin, tMax);
+}
+
+void tdc::on_doubleSpinBox_tdc_tmax_valueChanged(double tMax)
+{
+    double tMin = ui->doubleSpinBox_tdc_tmin->value();
+    if (tMax <= tMin) return;
+    hTDC->adjustPlot(ui->spinBox_tdc_nbins->value(), tMin, tMax);
+}
+
+void tdc::on_pushButton_tdc_log_clicked()
+{
+    bool isLogY = hTDC->setLogY();
+
+    if (isLogY) {
+        ui->pushButton_tdc_log->setText("Linear Scale");
+    }
+    else {
+        ui->pushButton_tdc_log->setText("Log Scale");
+    }
+}
+
+void tdc::on_pushButton_tdc_clear_clicked()
+{
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(
+        this,
+        "Clear data",
+        "Are you sure you want to clear the data ?",
+        QMessageBox::Yes | QMessageBox::No
+    );
+
+    if (reply == QMessageBox::Yes) {
+        qDebug() << "Yes was clicked";
+
+        clearStatUi();
+        resetCounters();
+
+        hTDC->adjustPlot(ui->spinBox_tdc_nbins->value(), ui->doubleSpinBox_tdc_tmin->value(), ui->doubleSpinBox_tdc_tmax->value());
+    }
+    else {
+        qDebug() << "Yes was *not* clicked";
+        return;
+    }
+
+}
+
+bool tdc::stillRunning()
+{
+    return isRunning;
+}
+
+void tdc::stopRun()
+{
+    on_pushButton_tdc_stop_run_clicked();
+}
+
+void tdc::clearStatUi()
+{
+    ui->lcdNumber_tdc_total->display(0);
+    ui->lcdNumber_tdc_rate->display(0);
+    ui->lcdNumber_tdc_rms_arrival->display(0);
+    ui->lcdNumber_tdc_mean_arrival->display(0);
+    ui->lcdNumber_tdc_last_lifetime->display(0);
+    ui->lcdNumber_tdc_rms_lifetime->display(0);
+    ui->lcdNumber_tdc_mean_lifetime->display(0);
+}
+
+void tdc::on_spinBox_tdc_start_valueChanged(int startChannel)
+{
+    module->setStartStopChannels(startChannel, ui->spinBox_tdc_stop->value());
+}
+
+void tdc::on_spinBox_tdc_stop_valueChanged(int stopChannel)
+{
+    module->setStartStopChannels(ui->spinBox_tdc_start->value(), stopChannel);
+}
+

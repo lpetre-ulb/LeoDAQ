@@ -43,6 +43,7 @@ MainWindow::~MainWindow()
 void MainWindow::closing()
 {
     qDebug() << "Still good";
+    if (tdcWidget->stillRunning()) tdcWidget->stopRun();
     CAENVME_End(handleChef);
 
     qApp->quit();
