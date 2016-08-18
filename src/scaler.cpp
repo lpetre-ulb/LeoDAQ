@@ -19,6 +19,8 @@ scaler::scaler(QWidget *parent, int handleChef_) :
 
     hScaler = new histogram(ui->qcp_scaler, "Poisson Distribution", "count", "# events");
     hScaler->adjustPlot(ui->spinBox_scaler_nbins->value(), ui->doubleSpinBox_scaler_cmin->value(), ui->doubleSpinBox_scaler_cmax->value());
+
+    nExp = ui->spinBox_scaler_nevents->value();
 }
 
 scaler::~scaler()
@@ -169,9 +171,12 @@ void scaler::on_spinBox_scaler_rotary_switches_valueChanged(int rotSw)
 
 void scaler::on_pushButton_scaler_poisson_clicked()
 {
+    ui->pushButton_scaler_poisson->setEnabled(false);
+    ui->pushButton_sclaer_stop->setEnabled(true);
+
     double truePeriod = module->getTruePulsePeriod();
 
-    int nExp = ui->spinBox_scaler_nevents->value();
+    nExp = ui->spinBox_scaler_nevents->value();
     for (int i = 0; i < nExp; i++) {
         ui->progressBar_scaler_pulse->setValue((int)(100*i*1.0/nExp));
         module->resetChannels();
@@ -197,10 +202,16 @@ void scaler::on_pushButton_scaler_poisson_clicked()
 
         hScaler->updatePlot((int)value32);
 
-
-
-
     }
-    ui->progressBar_scaler_pulse->setValue(100);
 
+    ui->progressBar_scaler_pulse->setValue(100);
+    ui->pushButton_scaler_poisson->setEnabled(true);
+    ui->pushButton_sclaer_stop->setEnabled(false);
+
+
+}
+
+void scaler::on_pushButton_sclaer_stop_clicked()
+{
+    nExp = 0;
 }

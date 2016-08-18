@@ -38,6 +38,8 @@ private slots:
 
     void on_pushButton_scaler_poisson_clicked();
 
+    void on_pushButton_sclaer_stop_clicked();
+
 private:
     Ui::scaler *ui;
 
@@ -45,6 +47,7 @@ private:
     ScalerModule *module;
 
     histogram *hScaler;
+    int nExp;
 
     void makeItNice();
 
