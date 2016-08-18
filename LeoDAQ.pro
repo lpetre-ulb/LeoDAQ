@@ -10,6 +10,17 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = LeoDAQ
 DESTDIR = bin
+targetinstall.path = /usr/local/bin/LeoDAQ
+targetinstall.files = bin/LeoDAQ
+
+INSTALLS += targetinstall
+
+icon.path = /usr/local/LeoDAQ
+icon.files = data/iconLeoDAQ.png
+icon.extra = cp data/LeoDAQ.desktop ~/Desktop/LeoDAQ.desktop
+
+INSTALLS += icon
+
 TEMPLATE = app
 
 
