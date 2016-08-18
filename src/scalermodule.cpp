@@ -35,11 +35,77 @@ QString ScalerModule::getModuleType()
     }
 
 }
+void ScalerModule::startPulser()
+{
+    CAENVME_StartPulser(handleChef, cvPulserA);
+}
 
 void ScalerModule::setPulserMode(unsigned char width, CVTimeUnits unit)
 {
     // set pulser mode
-    CAENVME_SetPulserConf(handleChef, cvPulserA, 3, 2, cvUnit104ms, 1, cvManualSW, cvManualSW);
+    CAENVME_SetPulserConf(handleChef, cvPulserA, width+1, width, unit, 1, cvManualSW, cvManualSW);
     CAENVME_SetOutputConf(handleChef, cvOutput0, cvInverted, cvActiveLow, cvMiscSignals);
+    qDebug() << "New pulser width: " << width << " " << unit;
 }
 
+double ScalerModule::getTruePulsePeriod()
+{
+    unsigned char period;
+    double truePeriod = 0; // in ms
+    unsigned char width;
+    double trueWidth = 0; // in ms
+    CVTimeUnits unit;
+    unsigned char pulseNo;
+    CVIOSources start, reset;
+    CAENVME_GetPulserConf(handleChef, cvPulserA, &period, &width, &unit, &pulseNo, &start, &reset);
+
+    switch (unit) {
+        case cvUnit25ns:
+            truePeriod = (int)(period) * 0.000025;
+            trueWidth = (int)(width) * 0.000025;
+            break;
+        case cvUnit104ms:
+            truePeriod = (int)(period) * 104;
+            trueWidth = (int)(width) * 104;
+            break;
+        case cvUnit410us:
+            truePeriod = (int)(period) * 0.41;
+            trueWidth = (int)(width) * 0.41;
+            break;
+        case cvUnit1600ns:
+            truePeriod = (int)(period) * 0.0016;
+            trueWidth = (int)(width) * 0.0016;
+            break;
+    }
+
+    qDebug() << "Period: " << truePeriod << " ms";
+    qDebug() << "Width: " << trueWidth << " ms";
+    return truePeriod;
+}
+
+u_int32_t ScalerModule::readChannel(int ch)
+{
+    u_int32_t value32 = 0;
+    CAENVME_ReadCycle(handleChef, baseAddress + 0x10 + ch * 4, &value32, cvA32_U_DATA, cvD32);
+    return value32;
+}
+
+void ScalerModule::readChannels(std::vector<int>* val)
+{
+    unsigned char values[64];
+    int sizeOut = 0;
+    CAENVME_BLTReadCycle(handleChef, baseAddress + 0x10, values, 64, cvA32_U_DATA, cvD32, &sizeOut);
+
+    int *ch;
+    for (int i = 0; i < 16; ++i) {
+        ch = (int*) (values + i*4);
+        (*val)[i] = *ch;
+    }
+
+}
+
+void ScalerModule::resetChannels()
+{
+    uint16_t value16 = 0;
+    CAENVME_ReadCycle(handleChef, baseAddress + 0x50, &value16, cvA32_U_DATA, cvD16);
+}

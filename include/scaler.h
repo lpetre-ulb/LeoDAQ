@@ -24,6 +24,20 @@ private slots:
 
     void on_spinBox_scaler_nbins_valueChanged(int nBins);
 
+    void on_pushButton_scaler_pulse_clicked();
+
+    void on_spinBox_scaler_width_valueChanged(int width);
+
+    void on_comboBox_scaler_unit_currentIndexChanged(int unitIndex);
+
+    void on_pushButton_scaler_update_clicked();
+
+    void on_pushButton_scaler_reset_clicked();
+
+    void on_spinBox_scaler_rotary_switches_valueChanged(int rotSw);
+
+    void on_pushButton_scaler_poisson_clicked();
+
 private:
     Ui::scaler *ui;
 
@@ -32,10 +46,11 @@ private:
 
     histogram *hScaler;
 
+    void makeItNice();
+
     void updateBaseAddress(int rotSw);
     void enabledScalerUi(bool enable);
     void setPulserMode(unsigned char width, int unitIndex);
-
 
 
 };

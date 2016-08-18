@@ -16,6 +16,14 @@ public:
     ScalerModule(int handleChef_);
     QString setBaseAddress(int baseAddress_);
     void setPulserMode(unsigned char width, CVTimeUnits unit);
+    void startPulser();
+    double getTruePulsePeriod();
+    void readChannels(std::vector<int> *values);
+    void resetChannels();
+    u_int32_t readChannel(int ch);
+
+
+
 
 private:
     QString getModuleType();

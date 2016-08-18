@@ -60,6 +60,9 @@ void MainWindow::closeEvent(QCloseEvent *event)
         event->accept();
         closing();
     }
+    else {
+        event->ignore();
+    }
 }
 
 void MainWindow::connectToVMECrate()
