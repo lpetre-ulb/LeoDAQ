@@ -215,3 +215,8 @@ void scaler::on_pushButton_sclaer_stop_clicked()
 {
     nExp = 0;
 }
+
+void scaler::on_pushButton_scaler_clear_clicked()
+{
+    hScaler->adjustPlot(ui->spinBox_scaler_nbins->value(), ui->doubleSpinBox_scaler_cmin->value(), ui->doubleSpinBox_scaler_cmax->value());
+}

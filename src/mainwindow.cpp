@@ -17,7 +17,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connectToVMECrate();
 
-
     hvWidget = new hv(this, handleChef);
     scalerWidget = new scaler(this, handleChef);
     tdcWidget = new tdc(this, handleChef);
@@ -29,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // set the starting tab index
     ui->tabWidget->setCurrentIndex(0); // HV
+
 
 }
 
@@ -42,6 +42,7 @@ void MainWindow::closing()
     qDebug() << "Still good";
     if (tdcWidget->stillRunning()) tdcWidget->stopRun();
     CAENVME_End(handleChef);
+
 
     qApp->quit();
 }

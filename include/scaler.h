@@ -40,6 +40,8 @@ private slots:
 
     void on_pushButton_sclaer_stop_clicked();
 
+    void on_pushButton_scaler_clear_clicked();
+
 private:
     Ui::scaler *ui;
 

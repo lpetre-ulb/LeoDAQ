@@ -505,7 +505,7 @@
   <widget class="QLabel" name="label_scaler_10">
    <property name="geometry">
     <rect>
-     <x>390</x>
+     <x>400</x>
      <y>55</y>
      <width>67</width>
      <height>17</height>
@@ -518,9 +518,9 @@
   <widget class="QSpinBox" name="spinBox_scaler_nevents">
    <property name="geometry">
     <rect>
-     <x>450</x>
+     <x>470</x>
      <y>50</y>
-     <width>91</width>
+     <width>71</width>
      <height>27</height>
     </rect>
    </property>
@@ -582,6 +582,19 @@
   <widget class="QPushButton" name="pushButton_sclaer_stop">
    <property name="geometry">
     <rect>
+     <x>380</x>
+     <y>20</y>
+     <width>81</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Stop</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_scaler_clear">
+   <property name="geometry">
+    <rect>
      <x>290</x>
      <y>50</y>
      <width>81</width>
@@ -589,7 +602,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Stop</string>
+    <string>Clear</string>
    </property>
   </widget>
  </widget>
