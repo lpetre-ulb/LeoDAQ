@@ -72,7 +72,7 @@ void MainWindow::connectToVMECrate()
         QMessageBox::StandardButton resBtn = QMessageBox::question(
             this,
             "Error",
-            tr("Impossible to connect to VME crate!\nPlease, check that the usb cable is connected. If it is connected, check if it is seen in /etc/usb/\nTry again ?"),
+            tr("Impossible to connect to VME crate!\nPlease, check that the usb cable is connected. If it is connected, check if it is seen in /dev/usb/\nTry again ?"),
             QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
             QMessageBox::Yes
         );
