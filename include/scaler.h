@@ -55,7 +55,7 @@ private:
 
     void updateBaseAddress(int rotSw);
     void enabledScalerUi(bool enable);
-    void setPulserMode(unsigned char width, int unitIndex);
+    void setPulserMode(unsigned char width, int unitIndex, int repeat = 1);
 
 
 };

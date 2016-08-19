@@ -46,9 +46,9 @@ void scaler::enabledScalerUi(bool enable)
     ui->pushButton_scaler_poisson->setEnabled(enable);
 }
 
-void scaler::setPulserMode(unsigned char width, int unitIndex)
+void scaler::setPulserMode(unsigned char width, int unitIndex, int repeat)
 {
-    module->setPulserMode(width, CVTimeUnits(unitIndex));
+    module->setPulserMode(width, CVTimeUnits(unitIndex), repeat);
 }
 
 void scaler::on_doubleSpinBox_scaler_cmax_valueChanged(double cMax)

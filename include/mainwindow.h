@@ -7,6 +7,7 @@
 #include "hv.h"
 #include "scaler.h"
 #include "tdc.h"
+#include "efficiency.h"
 
 namespace Ui {
 class MainWindow;
@@ -38,6 +39,7 @@ private:
     hv* hvWidget;
     scaler* scalerWidget;
     tdc* tdcWidget;
+    Efficiency* efficiencyWidget;
 };
 
 #endif // MAINWINDOW_H

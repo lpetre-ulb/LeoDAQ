@@ -20,11 +20,13 @@ MainWindow::MainWindow(QWidget *parent) :
     hvWidget = new hv(this, handleChef);
     scalerWidget = new scaler(this, handleChef);
     tdcWidget = new tdc(this, handleChef);
+    efficiencyWidget = new Efficiency(this, handleChef);
 
     // add the tabs for the program
     ui->tabWidget->addTab(hvWidget, "HV");
     ui->tabWidget->addTab(scalerWidget, "Scaler");
     ui->tabWidget->addTab(tdcWidget, "TDC");
+    ui->tabWidget->addTab(efficiencyWidget, "Efficiency");
 
     // set the starting tab index
     ui->tabWidget->setCurrentIndex(0); // HV

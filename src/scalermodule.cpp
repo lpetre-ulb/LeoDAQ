@@ -40,10 +40,10 @@ void ScalerModule::startPulser()
     CAENVME_StartPulser(handleChef, cvPulserA);
 }
 
-void ScalerModule::setPulserMode(unsigned char width, CVTimeUnits unit)
+void ScalerModule::setPulserMode(unsigned char width, CVTimeUnits unit, int repeat)
 {
     // set pulser mode
-    CAENVME_SetPulserConf(handleChef, cvPulserA, width+1, width, unit, 1, cvManualSW, cvManualSW);
+    CAENVME_SetPulserConf(handleChef, cvPulserA, width+1, width, unit, repeat, cvManualSW, cvManualSW);
     CAENVME_SetOutputConf(handleChef, cvOutput0, cvInverted, cvActiveLow, cvMiscSignals);
     qDebug() << "New pulser width: " << width << " " << unit;
 }

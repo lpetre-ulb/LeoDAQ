@@ -114,3 +114,9 @@ void HVModule::setChannel(int ch_, int state_, int voltage_, int current_, int t
     CAENVME_WriteCycle(handleChef, baseAddress + 0x80 * ch_ + 0xA4, &value16, cvA32_U_DATA, cvD16);
 
 }
+
+void HVModule::setVoltage(int ch_, int voltage_)
+{
+    uint16_t value16 = voltage_ * 10;
+    CAENVME_WriteCycle(handleChef, baseAddress + 0x80 * ch_ + 0x80, &value16, cvA32_U_DATA, cvD16);
+}

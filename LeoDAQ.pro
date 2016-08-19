@@ -33,7 +33,9 @@ SOURCES += src/main.cpp \
     src/histogram.cpp \
     src/hvmodule.cpp \
     src/tdcmodule.cpp \
-    src/scalermodule.cpp
+    src/scalermodule.cpp \
+    src/efficiency.cpp \
+    src/graph.cpp
 
 OBJECTS_DIR = build/.obj
 MOC_DIR = build/.moc
@@ -50,12 +52,15 @@ HEADERS  += include/mainwindow.h \
     include/histogram.h \
     include/hvmodule.h \
     include/tdcmodule.h \
-    include/scalermodule.h
+    include/scalermodule.h \
+    include/efficiency.h \
+    include/graph.h
 
 FORMS += form/mainwindow.ui \
     form/hv.ui \
     form/scaler.ui \
-    form/tdc.ui
+    form/tdc.ui \
+    form/efficiency.ui
 
 RESOURCES += data/resources.qrc
 
