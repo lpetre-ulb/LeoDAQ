@@ -76,6 +76,20 @@ double HVModule::getCurrent(int channel)
     return current;
 }
 
+double HVModule::getChVMax(int channel)
+{
+    double vmax;
+    if (channel < 0 || channel > 5) vmax = 0;
+    else {
+        u_int16_t value16;
+        CVErrorCodes res = CAENVME_ReadCycle(handleChef, baseAddress + 0x80 * channel + 0x9C, &value16, cvA32_U_DATA, cvD16);
+        if (res != cvSuccess) vmax = 0;
+        else vmax = value16*0.1;
+    }
+    return vmax;
+
+}
+
 u_int16_t HVModule::getChStatus(int channel)
 {
     u_int16_t status;

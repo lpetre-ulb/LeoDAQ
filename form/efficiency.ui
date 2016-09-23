@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="maximum">
-    <number>1200</number>
+    <number>3000</number>
    </property>
    <property name="singleStep">
     <number>20</number>
@@ -42,7 +42,7 @@
     </rect>
    </property>
    <property name="maximum">
-    <number>1300</number>
+    <number>3000</number>
    </property>
    <property name="singleStep">
     <number>20</number>

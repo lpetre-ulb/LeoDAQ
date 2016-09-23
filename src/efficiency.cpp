@@ -2,6 +2,7 @@
 #include "ui_efficiency.h"
 #include <unistd.h>
 #include <chrono>
+#include <QMessageBox>
 
 Efficiency::Efficiency(QWidget *parent, int handleChef_) :
     QWidget(parent),
@@ -141,14 +142,27 @@ void Efficiency::on_pushButton_efficiency_start_clicked()
     qDebug() << "N repetition= " << ui->spinBox_efficiency_scaler_repeat->value();
     truePeriod *= ui->spinBox_efficiency_scaler_repeat->value();
 
+    int channel = ui->spinBox_efficiency_channel->value();
     int hvMax = ui->spinBox_efficiency_hvmax->value();
+    // check that hvMax is smaller than VMax of the corresponding channel
+    if (hvMax > hvModule->getChVMax(channel)) {
+	
+    	QMessageBox::StandardButton resBtn = QMessageBox::question(
+            this,
+            this->windowTitle(),
+            tr("The higher limit of voltage is larger than the VMax set for this channel. Do you want to proceed with VMax instead of the higher limit you have provided.\n"),
+            QMessageBox::Cancel | QMessageBox::Yes, QMessageBox::Cancel
+        );
+	
+	if (resBtn == QMessageBox::Cancel) return;
+	else if (resBtn == QMessageBox::Yes) hvMax = hvModule->getChVMax(channel);
+    }
     int hvMin = ui->spinBox_efficiency_hvmin->value();
     int step = ui->spinBox_efficiency_step->value();
     int nPoints = 1 + (hvMax - hvMin) / step;
 
 
 
-    int channel = ui->spinBox_efficiency_channel->value();
 
     for (int i = 0; i < nPoints; i++) {
         ui->progressBar_efficiency->setValue((int)(100*i*1.0/nPoints));
@@ -181,6 +195,8 @@ void Efficiency::on_pushButton_efficiency_start_clicked()
     qDebug() << "Finishing efficiency measurements";
     stopRun = false;
     ui->progressBar_efficiency->setValue(100);
+    qDebug() << "Setting HV to lower limit for safety";
+    updateHV(channel, hvMin);
 
     ui->pushButton_efficiency_stop->setEnabled(false);
     ui->pushButton_efficiency_start->setEnabled(true);

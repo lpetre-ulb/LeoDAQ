@@ -22,6 +22,7 @@ public:
     double getVoltage(int channel);
     void setVoltage(int ch_, int voltage_);
     double getCurrent(int channel);
+    double getChVMax(int channel);
     u_int16_t getChStatus(int channel);
     void setChannel(int ch_, int state_, int voltage_, int current_, int tripTime_, int vMax_, int rampDown_, int rampUp_);
 
