@@ -144,6 +144,9 @@ void Efficiency::on_pushButton_efficiency_start_clicked()
 
     int channel = ui->spinBox_efficiency_channel->value();
     int hvMax = ui->spinBox_efficiency_hvmax->value();
+    int hvMin = ui->spinBox_efficiency_hvmin->value();
+    int step = ui->spinBox_efficiency_step->value();
+
     // check that hvMax is smaller than VMax of the corresponding channel
     if (hvMax > hvModule->getChVMax(channel)) {
 	
@@ -154,15 +157,17 @@ void Efficiency::on_pushButton_efficiency_start_clicked()
             QMessageBox::Cancel | QMessageBox::Yes, QMessageBox::Cancel
         );
 	
-	if (resBtn == QMessageBox::Cancel) return;
+	if (resBtn == QMessageBox::Cancel) {
+            ui->pushButton_efficiency_stop->setEnabled(false);
+            ui->pushButton_efficiency_start->setEnabled(true);
+            return;
+	}
 	else if (resBtn == QMessageBox::Yes) hvMax = hvModule->getChVMax(channel);
     }
-    int hvMin = ui->spinBox_efficiency_hvmin->value();
-    int step = ui->spinBox_efficiency_step->value();
+
+
+
     int nPoints = 1 + (hvMax - hvMin) / step;
-
-
-
 
     for (int i = 0; i < nPoints; i++) {
         ui->progressBar_efficiency->setValue((int)(100*i*1.0/nPoints));
