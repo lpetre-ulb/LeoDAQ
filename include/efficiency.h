@@ -2,6 +2,7 @@
 #define EFFICIENCY_H
 
 #include <QWidget>
+#include <QTimer>
 #include "hvmodule.h"
 #include "scalermodule.h"
 #include "graph.h"
@@ -25,6 +26,8 @@ public:
     void updateVMAX();
 
     void updateIMAX();
+    void pauseTimer();
+    void restartTimer();
 
 
 private slots:
@@ -42,6 +45,12 @@ private slots:
 
     void on_pushButton_efficiency_stop_clicked();
 
+    void updateUI();
+
+    void on_pushButton_efficiency_file_name_clicked();
+
+
+
 private:
     Ui::Efficiency *ui;
     HVModule *hvModule;
@@ -51,6 +60,12 @@ private:
     graph* grEfficiency;
     bool stopRun;
     void updateHV(int channel, int hv);
+    // members
+    QTimer* timer;
+    int interval;
+    void launchTimer(int interval);
+    void setFileName();
+
 
 };
 

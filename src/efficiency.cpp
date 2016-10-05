@@ -18,6 +18,9 @@ Efficiency::Efficiency(QWidget *parent, int handleChef_) :
     updateVMAX();
     updateIMAX();
 
+    launchTimer(1000);
+
+
     scalerModule = new ScalerModule(handleChef_);
     updateScalerBaseAddress(ui->spinBox_efficiency_scaler_rotary_switches->value());
 
@@ -38,6 +41,33 @@ Efficiency::~Efficiency()
     delete ui;
 }
 
+
+void Efficiency::launchTimer(int interval_)
+{
+    interval = interval_;
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(updateUI()));
+    updateUI();
+    timer->start(interval); //time specified in ms
+}
+
+void Efficiency::pauseTimer()
+{
+    timer->stop();
+    qDebug() << "Timer is paused";
+}
+
+void Efficiency::restartTimer()
+{
+    timer->start(interval);
+    qDebug() << "Timer is restarted";
+}
+
+void Efficiency::updateUI()
+{
+    updateVMAX();
+    updateIMAX();
+}
 
 void Efficiency::makeItNice()
 {
@@ -169,34 +199,45 @@ void Efficiency::on_pushButton_efficiency_start_clicked()
 
     int nPoints = 1 + (hvMax - hvMin) / step;
 
-    for (int i = 0; i < nPoints; i++) {
-        ui->progressBar_efficiency->setValue((int)(100*i*1.0/nPoints));
-        scalerModule->resetChannels();
-
-        updateHV(channel, hvMin + i * step);
-        usleep(500000);
-        scalerModule->startPulser();
-
-        long now = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-        long t = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
-
-        qDebug() << "Starting while loop ... ";
-        while (t < now + truePeriod) {
-
-            t = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count() ;
-            QCoreApplication::processEvents();
-            if (stopRun) break;
-        }
-        if (stopRun) break;
-
-        qDebug() << "Waiting loop finished";
-        uint32_t num = scalerModule->readChannel(0);
-        uint32_t den = scalerModule->readChannel(1);
-        qDebug() << "Finishing reading: " << num << "  /  " << den ;
-
-        grEfficiency->addEfficiencyPoint(hvMin + i*step, num, den);
-
+    QString fileName = ui->lineEdit_efficiency_file_name->text();
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Append)) {
+        qDebug() << "Problem opening or creating the file:";
+        qDebug() << fileName;
     }
+    else {
+        QTextStream stream(&file);
+        for (int i = 0; i < nPoints; i++) {
+            ui->progressBar_efficiency->setValue((int)(100*i*1.0/nPoints));
+            scalerModule->resetChannels();
+
+            updateHV(channel, hvMin + i * step);
+            usleep(500000);
+            scalerModule->startPulser();
+
+            long now = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+            long t = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+
+            qDebug() << "Starting while loop ... ";
+            while (t < now + truePeriod) {
+
+                t = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now().time_since_epoch()).count() ;
+                QCoreApplication::processEvents();
+                if (stopRun) break;
+            }
+            if (stopRun) break;
+
+            qDebug() << "Waiting loop finished";
+            uint32_t num = scalerModule->readChannel(0);
+            uint32_t den = scalerModule->readChannel(1);
+            qDebug() << "Finishing reading: " << num << "  /  " << den ;
+
+            grEfficiency->addEfficiencyPoint(hvMin + i*step, num, den);
+            stream << QString::number(hvMin + i*step) << " " <<  QString::number(num) << " " <<  QString::number(den) << "\n";
+
+        }
+    }
+    file.close();
     qDebug() << "Finishing efficiency measurements";
     stopRun = false;
     ui->progressBar_efficiency->setValue(100);
@@ -225,4 +266,38 @@ void Efficiency::updateHV(int channel, int hv)
         usleep(100000);
         if (stopRun) break;
     }
+}
+
+void Efficiency::setFileName()
+{
+     //get current date
+     QDate date = QDate::currentDate();
+     QString dateString = date.toString();
+     qDebug() << dateString.replace(" ", "_");
+
+     //get current time
+     QTime time = QTime::currentTime();
+     QString timeString = time.toString();
+     qDebug() << timeString.replace(":", "_");
+
+     QString fileNameTmp = QStandardPaths::locate(QStandardPaths::DocumentsLocation, QString(), QStandardPaths::LocateDirectory);
+     fileNameTmp += "Efficiency_";
+     fileNameTmp += dateString;
+     fileNameTmp += "_at_";
+     fileNameTmp += timeString;
+     fileNameTmp += ".txt";
+     qDebug() << "This is the location: ";
+     qDebug() << fileNameTmp;
+     ui->lineEdit_efficiency_file_name->setText(fileNameTmp);
+
+}
+
+void Efficiency::on_pushButton_efficiency_file_name_clicked()
+{
+    QString fileName = ui->lineEdit_efficiency_file_name->text();
+    QString newFileName = QFileDialog::getSaveFileName(this, tr("Save File"), QStandardPaths::locate(QStandardPaths::DocumentsLocation,
+                                       QString(), QStandardPaths::LocateDirectory));
+
+    ui->lineEdit_efficiency_file_name->setText(newFileName == "" ? fileName : newFileName);
+
 }

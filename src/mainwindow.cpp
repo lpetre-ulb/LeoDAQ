@@ -94,4 +94,10 @@ void MainWindow::on_tabWidget_currentChanged(int index)
     else {
         hvWidget->restartTimer();
     }
+    if (ui->tabWidget->currentWidget()->objectName() != "Efficiency") {
+        efficiencyWidget->pauseTimer();
+    }
+    else {
+        efficiencyWidget->restartTimer();
+    }
 }
