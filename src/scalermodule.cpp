@@ -6,9 +6,6 @@ ScalerModule::ScalerModule(int handleChef_):
     handleChef(handleChef_)
 {
     baseAddress = -1;
-
-
-
 }
 
 QString ScalerModule::setBaseAddress(int baseAddress_)
@@ -35,6 +32,7 @@ QString ScalerModule::getModuleType()
     }
 
 }
+
 void ScalerModule::startPulser()
 {
     CAENVME_StartPulser(handleChef, cvPulserA);

@@ -3,11 +3,14 @@
 
 #include <QMainWindow>
 #include <QCloseEvent>
+#include <QVector>
+#include <QString>
 
 #include "hv.h"
 #include "scaler.h"
 #include "tdc.h"
 #include "efficiency.h"
+#include "qdc.h"
 
 namespace Ui {
 class MainWindow;
@@ -24,6 +27,8 @@ public:
     void closing();
     void closeEvent (QCloseEvent *event);
     void connectToVMECrate();
+    QVector<QString> setUpInterface();
+
 
 
 private slots:
@@ -40,6 +45,7 @@ private:
     scaler* scalerWidget;
     tdc* tdcWidget;
     Efficiency* efficiencyWidget;
+    qdc* qdcWidget;
 };
 
 #endif // MAINWINDOW_H

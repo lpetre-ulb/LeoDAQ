@@ -2,10 +2,17 @@
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 #include <CAENVMElib.h>
+#include <dialogsetupinterface.h>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    hvWidget(nullptr),
+    scalerWidget(nullptr),
+    tdcWidget(nullptr),
+    efficiencyWidget(nullptr),
+    qdcWidget(nullptr)
 {
     ui->setupUi(this);
 
@@ -17,22 +24,41 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connectToVMECrate();
 
-    hvWidget = new hv(this, handleChef);
-    scalerWidget = new scaler(this, handleChef);
-    tdcWidget = new tdc(this, handleChef);
-    efficiencyWidget = new Efficiency(this, handleChef);
+
+    QVector<QString> config = setUpInterface();
+
+
+
+    if (config.indexOf("hvWidget") > -1) hvWidget = new hv(this, handleChef);
+    if (config.indexOf("scalerWidget") > -1) scalerWidget = new scaler(this, handleChef);
+    if (config.indexOf("tdcWidget") > -1) tdcWidget = new tdc(this, handleChef);
+    if (config.indexOf("efficiencyWidget") > -1) efficiencyWidget = new Efficiency(this, handleChef);
+    if (config.indexOf("qdcWidget") > -1) qdcWidget = new qdc(this, handleChef);
 
     // add the tabs for the program
-    ui->tabWidget->addTab(hvWidget, "HV");
-    ui->tabWidget->addTab(scalerWidget, "Scaler");
-    ui->tabWidget->addTab(tdcWidget, "TDC");
-    ui->tabWidget->addTab(efficiencyWidget, "Efficiency");
+    if (hvWidget) ui->tabWidget->addTab(hvWidget, "HV");
+    if (scalerWidget) ui->tabWidget->addTab(scalerWidget, "Scaler");
+    if (tdcWidget) ui->tabWidget->addTab(tdcWidget, "TDC");
+    if (efficiencyWidget) ui->tabWidget->addTab(efficiencyWidget, "Efficiency");
+    if (qdcWidget) ui->tabWidget->addTab(qdcWidget, "QDC");
 
     // set the starting tab index
     ui->tabWidget->setCurrentIndex(0); // HV
 
 
 }
+
+
+QVector<QString> MainWindow::setUpInterface()
+{
+
+    DialogSetupInterface* setUp = new DialogSetupInterface();
+
+    return setUp->getConfig();
+
+
+}
+
 
 MainWindow::~MainWindow()
 {
@@ -42,7 +68,7 @@ MainWindow::~MainWindow()
 void MainWindow::closing()
 {
     qDebug() << "Still good";
-    if (tdcWidget->stillRunning()) tdcWidget->stopRun();
+    if (tdcWidget && tdcWidget->stillRunning()) tdcWidget->stopRun();
     CAENVME_End(handleChef);
 
 
@@ -89,15 +115,16 @@ void MainWindow::connectToVMECrate()
 void MainWindow::on_tabWidget_currentChanged(int index)
 {
     if (ui->tabWidget->currentWidget()->objectName() != "hv") {
-        hvWidget->pauseTimer();
+        if (hvWidget) hvWidget->pauseTimer();
     }
     else {
-        hvWidget->restartTimer();
+        if (hvWidget) hvWidget->restartTimer();
     }
     if (ui->tabWidget->currentWidget()->objectName() != "Efficiency") {
-        efficiencyWidget->pauseTimer();
+        if (efficiencyWidget) efficiencyWidget->pauseTimer();
     }
     else {
-        efficiencyWidget->restartTimer();
+        if (efficiencyWidget) efficiencyWidget->restartTimer();
     }
 }
+

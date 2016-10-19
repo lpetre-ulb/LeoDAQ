@@ -35,7 +35,10 @@ SOURCES += src/main.cpp \
     src/tdcmodule.cpp \
     src/scalermodule.cpp \
     src/efficiency.cpp \
-    src/graph.cpp
+    src/graph.cpp \
+    src/qdc.cpp \
+    src/qdcmodule.cpp \
+    src/dialogsetupinterface.cpp
 
 OBJECTS_DIR = build/.obj
 MOC_DIR = build/.moc
@@ -54,13 +57,18 @@ HEADERS  += include/mainwindow.h \
     include/tdcmodule.h \
     include/scalermodule.h \
     include/efficiency.h \
-    include/graph.h
+    include/graph.h \
+    include/qdc.h \
+    include/qdcmodule.h \
+    include/dialogsetupinterface.h
 
 FORMS += form/mainwindow.ui \
     form/hv.ui \
     form/scaler.ui \
     form/tdc.ui \
-    form/efficiency.ui
+    form/efficiency.ui \
+    form/qdc.ui \
+    form/dialogsetupinterface.ui
 
 RESOURCES += data/resources.qrc
 
