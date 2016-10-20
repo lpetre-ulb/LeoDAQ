@@ -50,3 +50,59 @@ void DialogSetupInterface::on_checkBox_efficiency_tab_stateChanged(int arg1)
 
     }
 }
+
+void DialogSetupInterface::on_checkBox_muon_life_clicked()
+{
+    if (ui->checkBox_muon_life->isChecked()) {
+        ui->checkBox_cherenkov_electron->setChecked(false);
+        ui->checkBox_cherenkov_muon->setChecked(false);
+        ui->checkBox_cosmic_muon->setChecked(false);
+        ui->checkBox_hv_module->setChecked(true);
+        ui->checkBox_tdc_module->setChecked(true);
+        ui->checkBox_qdc_module->setChecked(false);
+        ui->checkBox_efficiency_tab->setChecked(false);
+        ui->checkBox_scaler_module->setChecked(false);
+    }
+}
+
+void DialogSetupInterface::on_checkBox_cosmic_muon_clicked()
+{
+    if (ui->checkBox_cosmic_muon->isChecked()) {
+        ui->checkBox_cherenkov_electron->setChecked(false);
+        ui->checkBox_cherenkov_muon->setChecked(false);
+        ui->checkBox_muon_life->setChecked(false);
+        ui->checkBox_hv_module->setChecked(true);
+        ui->checkBox_tdc_module->setChecked(true);
+        ui->checkBox_qdc_module->setChecked(false);
+        ui->checkBox_efficiency_tab->setChecked(false);
+        ui->checkBox_scaler_module->setChecked(false);
+    }
+}
+
+void DialogSetupInterface::on_checkBox_cherenkov_muon_clicked()
+{
+    if (ui->checkBox_cherenkov_muon->isChecked()) {
+        ui->checkBox_cherenkov_electron->setChecked(false);
+        ui->checkBox_cosmic_muon->setChecked(false);
+        ui->checkBox_muon_life->setChecked(false);
+        ui->checkBox_hv_module->setChecked(true);
+        ui->checkBox_tdc_module->setChecked(false);
+        ui->checkBox_qdc_module->setChecked(true);
+        ui->checkBox_efficiency_tab->setChecked(false);
+        ui->checkBox_scaler_module->setChecked(false);
+    }
+}
+
+void DialogSetupInterface::on_checkBox_cherenkov_electron_clicked()
+{
+    if (ui->checkBox_cherenkov_electron->isChecked()) {
+        ui->checkBox_cherenkov_muon->setChecked(false);
+        ui->checkBox_cosmic_muon->setChecked(false);
+        ui->checkBox_muon_life->setChecked(false);
+        ui->checkBox_hv_module->setChecked(true);
+        ui->checkBox_tdc_module->setChecked(false);
+        ui->checkBox_qdc_module->setChecked(true);
+        ui->checkBox_efficiency_tab->setChecked(false);
+        ui->checkBox_scaler_module->setChecked(false);
+    }
+}

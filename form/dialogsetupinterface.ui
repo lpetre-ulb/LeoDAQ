@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>291</width>
-    <height>260</height>
+    <width>358</width>
+    <height>279</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QCheckBox" name="checkBox_hv_module">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>80</y>
+     <x>210</x>
+     <y>100</y>
      <width>85</width>
      <height>20</height>
     </rect>
@@ -32,8 +32,8 @@
   <widget class="QPushButton" name="pushButton_done">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>230</y>
+     <x>250</x>
+     <y>240</y>
      <width>80</width>
      <height>22</height>
     </rect>
@@ -45,8 +45,8 @@
   <widget class="QPushButton" name="pushButton_cancel">
    <property name="geometry">
     <rect>
-     <x>100</x>
-     <y>230</y>
+     <x>150</x>
+     <y>240</y>
      <width>80</width>
      <height>22</height>
     </rect>
@@ -58,8 +58,8 @@
   <widget class="QCheckBox" name="checkBox_scaler_module">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>100</y>
+     <x>210</x>
+     <y>120</y>
      <width>121</width>
      <height>20</height>
     </rect>
@@ -71,8 +71,8 @@
   <widget class="QCheckBox" name="checkBox_tdc_module">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>120</y>
+     <x>210</x>
+     <y>140</y>
      <width>101</width>
      <height>20</height>
     </rect>
@@ -84,8 +84,8 @@
   <widget class="QCheckBox" name="checkBox_qdc_module">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>140</y>
+     <x>210</x>
+     <y>160</y>
      <width>121</width>
      <height>20</height>
     </rect>
@@ -97,8 +97,8 @@
   <widget class="QCheckBox" name="checkBox_efficiency_tab">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>160</y>
+     <x>210</x>
+     <y>180</y>
      <width>111</width>
      <height>20</height>
     </rect>
@@ -112,12 +112,103 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>191</width>
+     <width>351</width>
      <height>51</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the modules you need&lt;/p&gt;&lt;p&gt;for the GUI interface.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;Select the experiment setup you want to use or simply&lt;br/&gt;choose the modules you need for the GUI interface.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_muon_life">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>100</y>
+     <width>85</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Muon Life</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_cosmic_muon">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>130</y>
+     <width>111</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Muon Arch</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_cherenkov_muon">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>160</y>
+     <width>131</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Cherenkov Muon</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_cherenkov_electron">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>190</y>
+     <width>151</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Cherenkov Electron</string>
+   </property>
+  </widget>
+  <widget class="Line" name="line">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>70</y>
+     <width>20</width>
+     <height>141</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>70</y>
+     <width>59</width>
+     <height>14</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Modules</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>70</y>
+     <width>59</width>
+     <height>14</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Setups</string>
    </property>
   </widget>
  </widget>

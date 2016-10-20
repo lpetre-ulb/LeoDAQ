@@ -26,6 +26,14 @@ private slots:
 
     void on_checkBox_efficiency_tab_stateChanged(int arg1);
 
+    void on_checkBox_muon_life_clicked();
+
+    void on_checkBox_cosmic_muon_clicked();
+
+    void on_checkBox_cherenkov_muon_clicked();
+
+    void on_checkBox_cherenkov_electron_clicked();
+
 private:
     Ui::DialogSetupInterface *ui;
     QVector<QString> config;
