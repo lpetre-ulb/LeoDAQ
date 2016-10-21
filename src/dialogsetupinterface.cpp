@@ -25,8 +25,6 @@ void DialogSetupInterface::on_pushButton_done_clicked()
     if (ui->checkBox_qdc_module->isChecked()) config.append("qdcWidget");
     if (ui->checkBox_efficiency_tab->isChecked()) config.append("efficiencyWidget");
 
-
-
     this->accept();
 }
 
@@ -85,7 +83,7 @@ void DialogSetupInterface::on_checkBox_cherenkov_muon_clicked()
         ui->checkBox_cherenkov_electron->setChecked(false);
         ui->checkBox_cosmic_muon->setChecked(false);
         ui->checkBox_muon_life->setChecked(false);
-        ui->checkBox_hv_module->setChecked(true);
+        ui->checkBox_hv_module->setChecked(false);
         ui->checkBox_tdc_module->setChecked(false);
         ui->checkBox_qdc_module->setChecked(true);
         ui->checkBox_efficiency_tab->setChecked(false);
@@ -99,7 +97,7 @@ void DialogSetupInterface::on_checkBox_cherenkov_electron_clicked()
         ui->checkBox_cherenkov_muon->setChecked(false);
         ui->checkBox_cosmic_muon->setChecked(false);
         ui->checkBox_muon_life->setChecked(false);
-        ui->checkBox_hv_module->setChecked(true);
+        ui->checkBox_hv_module->setChecked(false);
         ui->checkBox_tdc_module->setChecked(false);
         ui->checkBox_qdc_module->setChecked(true);
         ui->checkBox_efficiency_tab->setChecked(false);

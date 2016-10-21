@@ -136,6 +136,10 @@ void qdc::on_pushButton_qdc_startprofile_clicked()
 
 
     QString fileName = ui->lineEdit_qdc_file_name->text();
+    while (fileName == "") {
+        on_pushButton_qdc_file_name_clicked();
+        fileName = ui->lineEdit_qdc_file_name->text();
+    }
     QFile file(fileName);
     if (!file.open(QIODevice::ReadWrite | QIODevice::Append)) {
         qDebug() << "Problem opening or creating the file:";
