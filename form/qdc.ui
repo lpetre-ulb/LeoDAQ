@@ -23,16 +23,16 @@
     </rect>
    </property>
    <property name="text">
-    <string>Clear channel</string>
+    <string>Clear Channel Buffer</string>
    </property>
   </widget>
   <widget class="QCustomPlot" name="qdc_profile" native="true">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>30</y>
-     <width>661</width>
-     <height>611</height>
+     <x>300</x>
+     <y>20</y>
+     <width>641</width>
+     <height>601</height>
     </rect>
    </property>
   </widget>
@@ -188,7 +188,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Clear Histograme</string>
+    <string>Clear Histogram</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_qdc_2">
@@ -255,7 +255,7 @@
      <x>10</x>
      <y>10</y>
      <width>131</width>
-     <height>17</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -274,7 +274,7 @@
     <rect>
      <x>10</x>
      <y>170</y>
-     <width>251</width>
+     <width>281</width>
      <height>121</height>
     </rect>
    </property>
@@ -350,7 +350,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>90</y>
+      <y>80</y>
       <width>81</width>
       <height>27</height>
      </rect>
@@ -379,9 +379,9 @@
   <widget class="QLineEdit" name="lineEdit_qdc_file_name">
    <property name="geometry">
     <rect>
-     <x>320</x>
-     <y>645</y>
-     <width>541</width>
+     <x>340</x>
+     <y>635</y>
+     <width>521</width>
      <height>27</height>
     </rect>
    </property>
@@ -390,7 +390,7 @@
    <property name="geometry">
     <rect>
      <x>870</x>
-     <y>645</y>
+     <y>635</y>
      <width>71</width>
      <height>27</height>
     </rect>
@@ -402,23 +402,23 @@
   <widget class="QLabel" name="label_qcd_8">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>650</y>
+     <x>300</x>
+     <y>640</y>
      <width>31</width>
      <height>17</height>
     </rect>
    </property>
    <property name="text">
-    <string>File</string>
+    <string>File:</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_qdc_4">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>140</y>
+     <y>130</y>
      <width>251</width>
-     <height>17</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -436,9 +436,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>310</y>
+     <y>300</y>
      <width>251</width>
-     <height>17</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -456,9 +456,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>480</y>
-     <width>251</width>
-     <height>17</height>
+     <y>470</y>
+     <width>151</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
