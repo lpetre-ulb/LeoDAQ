@@ -29,9 +29,9 @@
   <widget class="QCustomPlot" name="qdc_profile" native="true">
    <property name="geometry">
     <rect>
-     <x>300</x>
+     <x>290</x>
      <y>20</y>
-     <width>641</width>
+     <width>651</width>
      <height>601</height>
     </rect>
    </property>
@@ -274,7 +274,7 @@
     <rect>
      <x>10</x>
      <y>170</y>
-     <width>281</width>
+     <width>271</width>
      <height>121</height>
     </rect>
    </property>
