@@ -7,6 +7,8 @@ qdc::qdc(QWidget *parent, int32_t handleChef_) :
     ui(new Ui::qdc)
 {
     ui->setupUi(this);
+    ui->pushButton_qdc_file_name->setVisible(false);
+    ui->lineEdit_qdc_file_name->setEnabled(false);
 
     module = new QDCModule(handleChef_);
     updateBaseAddress(ui->spinBox_qdc_rotary_switches->value());
@@ -123,6 +125,7 @@ void qdc::on_doubleSpinBox_qdc_vmax_valueChanged(double vMax)
 
 void qdc::on_pushButton_qdc_startprofile_clicked()
 {
+
     nExp = ui->spinBox_qdc_nevents->value();
     ui->spinBox_qdc_nevents->setEnabled(false);
     ui->pushButton_clearChannel->setEnabled(false);
@@ -135,11 +138,14 @@ void qdc::on_pushButton_qdc_startprofile_clicked()
     ui->doubleSpinBox_qdc_vmax->setEnabled(false);
 
 
+    //QString fileName = ui->lineEdit_qdc_file_name->text();
+    //while (fileName == "") {
+    //    on_pushButton_qdc_file_name_clicked();
+    //    fileName = ui->lineEdit_qdc_file_name->text();
+    //}
+    setFileName();
     QString fileName = ui->lineEdit_qdc_file_name->text();
-    while (fileName == "") {
-        on_pushButton_qdc_file_name_clicked();
-        fileName = ui->lineEdit_qdc_file_name->text();
-    }
+
     QFile file(fileName);
     if (!file.open(QIODevice::ReadWrite | QIODevice::Append)) {
         qDebug() << "Problem opening or creating the file:";
@@ -147,6 +153,9 @@ void qdc::on_pushButton_qdc_startprofile_clicked()
     }
     else {
           QTextStream stream(&file);
+          // first clear the buffer
+          module->ClearChannels();
+          // then take data
           for(int i=0; i<nExp; i++){ // the stop will be implemented in the next function
               bool validData = false;
               uint32_t value32 = 0;
@@ -154,13 +163,19 @@ void qdc::on_pushButton_qdc_startprofile_clicked()
               do {
                   module->ReadChannelData(0, &value32, &validData);
                   QCoreApplication::processEvents();
-              } while(!validData);
 
-              hQDC->updatePlot(value32/10.0);
-              stream << QString::number(value32/10.0) << "\n";
+
+              } while(!validData && nExp != 0);
+
+              if (validData) {
+                  hQDC->updatePlot(value32/10.0);
+                  stream << QString::number(value32/10.0) << "\n";
+
+              }
           }
     }
     file.close();
+    qDebug() << "File is closed";
 
     ui->spinBox_qdc_nevents->setEnabled(true);
     ui->pushButton_clearChannel->setEnabled(true);
