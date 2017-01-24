@@ -44,6 +44,16 @@ private slots:
 
     void on_pushButton_tdc_file_name_clicked();
 
+    void on_pushButton_set_width_clicked();
+
+    void on_pushButton_read_config_clicked();
+
+    void on_pushButton_set_trigger_clicked();
+
+    void on_pushButton_set_cont_clicked();
+
+    void on_pushButton_set_offset_clicked();
+
 public:
     bool stillRunning();
     void stopRun();

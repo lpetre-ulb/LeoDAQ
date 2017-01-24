@@ -1,12 +1,15 @@
 #include "dialogsetupinterface.h"
 #include "ui_dialogsetupinterface.h"
 #include <QDebug>
+#include <QMessageBox>
 
 DialogSetupInterface::DialogSetupInterface(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogSetupInterface)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Welcome to the IIHE DAQ - version 1.0 (2017)");
+    this->setStyleSheet("background-color:white;");
     if (this->exec() == QDialog::Rejected) {
         qDebug() << "Not configured";
     }
@@ -25,7 +28,18 @@ void DialogSetupInterface::on_pushButton_done_clicked()
     if (ui->checkBox_qdc_module->isChecked()) config.append("qdcWidget");
     if (ui->checkBox_efficiency_tab->isChecked()) config.append("efficiencyWidget");
 
-    this->accept();
+    if (config.isEmpty()) {
+        QMessageBox::information(
+            this,
+            "Error",
+            tr("You must select at least one module, or cancel."),
+            QMessageBox::Ok,
+            QMessageBox::Ok
+        );
+    }
+    else {
+        this->accept();
+    }
 }
 
 QVector<QString> DialogSetupInterface::getConfig()
@@ -35,10 +49,11 @@ QVector<QString> DialogSetupInterface::getConfig()
 
 void DialogSetupInterface::on_pushButton_cancel_clicked()
 {
-    this->reject();
+    config.clear();
+    this->accept();
 }
 
-void DialogSetupInterface::on_checkBox_efficiency_tab_stateChanged(int arg1)
+void DialogSetupInterface::on_checkBox_efficiency_tab_stateChanged()
 {
     if (ui->checkBox_efficiency_tab->isChecked()) {
         if (!ui->checkBox_hv_module->isChecked() || !ui->checkBox_scaler_module->isChecked())

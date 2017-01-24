@@ -9,6 +9,12 @@ tdc::tdc(QWidget *parent, int handleChef_) :
 
     // change cosmetics
     makeItNice();
+    ui->pushButton_read_config->setVisible(false);
+    ui->pushButton_set_offset->setVisible(false);
+    ui->pushButton_set_width->setVisible(false);
+    ui->pushButton_set_trigger->setVisible(false);
+    ui->pushButton_set_cont->setVisible(false);
+
 
     // build the corresponding module
     module = new TDCModule(handleChef_);
@@ -73,10 +79,9 @@ void tdc::on_pushButton_tdc_start_run_clicked()
     ui->widget_tdc_histogram_config->setEnabled(!isRunning);
 
 
-    u_int16_t tdcWindowWidth = ui->spinBox_tdc_window_width->value();
+
+    uint16_t tdcWindowWidth = ui->spinBox_tdc_window_width->value();
     int16_t tdcWindowOffset = ui->spinBox_tdc_window_offset->value();
-
-
 
     QString fileName = ui->lineEdit_tdc_file_name->text();
     QFile file(fileName);
@@ -118,7 +123,7 @@ void tdc::on_pushButton_tdc_start_run_clicked()
             std::vector<int> values;
             module->readEvents(&values);
             int nEvents = values.size();
-            if (nEvents > 0) qDebug() << "Number of events: " << nEvents;
+            //if (nEvents > 0) qDebug() << "Number of events: " << nEvents;
             for (int i = 0; i < nEvents; ++i) {
                 updateStatUiAndPlot(values[i]);
                 stream << QString::number(values[i]) << "\n";
@@ -328,4 +333,31 @@ void tdc::on_pushButton_tdc_file_name_clicked()
 
     ui->lineEdit_tdc_file_name->setText(newFileName == "" ? fileName : newFileName);
 
+}
+
+void tdc::on_pushButton_set_width_clicked()
+{
+    module->setWindowWidth(ui->spinBox_tdc_window_width->value());
+}
+
+
+void tdc::on_pushButton_read_config_clicked()
+{
+    module->readConfig();
+    module->readAcqMode();
+}
+
+void tdc::on_pushButton_set_trigger_clicked()
+{
+    module->setTriggerAcquisitionMode();
+}
+
+void tdc::on_pushButton_set_cont_clicked()
+{
+    module->setContinuousAcquisitionMode();
+}
+
+void tdc::on_pushButton_set_offset_clicked()
+{
+    module->setWindowOffset(ui->spinBox_tdc_window_offset->value());
 }

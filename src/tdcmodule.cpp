@@ -1,6 +1,8 @@
 #include "tdcmodule.h"
 #include <unistd.h>
 #include <qdebug.h>
+#include <iostream>
+#include <QThread>
 
 TDCModule::TDCModule(int handleChef_):
     handleChef(handleChef_)
@@ -20,13 +22,13 @@ QString TDCModule::getFirmwareRevision()
     u_int16_t value16;
     // read board parameters
     QString fwRev;
-    CVErrorCodes res = CAENVME_ReadCycle(handleChef, baseAddress + 0x1026, &value16, cvA32_U_DATA, cvD16);
+    CVErrorCodes ret = CAENVME_ReadCycle(handleChef, baseAddress + 0x1026, &value16, cvA32_U_DATA, cvD16);
     qDebug() << ((value16) & 0xff);
     fwRev += QString::number((value16 >> 4) & 0xf);
     fwRev += QString(".");
     fwRev += QString::number(value16 & 0xf);
 
-    if (res != cvSuccess || fwRev != "0.5"){
+    if (ret != cvSuccess || fwRev != "0.5"){
         qDebug() << "Wrong board or wrong firmware revision: " << fwRev;
         return "UNKNOWN";
     }
@@ -39,11 +41,178 @@ QString TDCModule::getFirmwareRevision()
 void TDCModule::clear()
 {
     u_int16_t value16 = 0x0000;
-    CAENVME_WriteCycle(handleChef, baseAddress + 0x1016, &value16, cvA32_U_DATA, cvD16);
+    CVErrorCodes ret = CAENVME_WriteCycle(handleChef, baseAddress + 0x1016, &value16, cvA32_U_DATA, cvD16);
+    if (ret != cvSuccess) {
+        qDebug() << "Error while trying to clear:";
+        qDebug() << "Error code is: " << ret;
+        qDebug() << "Meaning: " << CAENVME_DecodeError(ret);
+    }
 }
 
-bool TDCModule::setTriggerMode(u_int16_t windowWidth, int16_t windowOffset)
+void TDCModule::readConfig()
 {
+        uint16_t value16;
+        waitForWriteOK();
+        value16 = 0x1600; // OPCODE 16XX read tdc config
+        CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+
+        waitForReadOK();
+        CAENVME_ReadCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+        std::cout << "Match window width: " << (value16) << std::endl;
+
+        waitForReadOK();
+        CAENVME_ReadCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+        std::cout << "window offset: " << (value16) << std::endl;
+        waitForReadOK();
+        CAENVME_ReadCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+        std::cout << "Extra search window " << (value16) << std::endl;
+        waitForReadOK();
+        CAENVME_ReadCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+        std::cout << "reject margin " << (value16) << std::endl;
+        waitForReadOK();
+        CAENVME_ReadCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+        std::cout << "trigger time substraction: " << (value16 & 0x1) << std::endl;
+}
+
+
+
+void TDCModule::setTriggerAcquisitionMode()
+{
+        //char a = 'a';
+        //std::cout << __LINE__ << " Enter a char: ";
+        //std::cin >> a;
+        //waitForWriteOK();
+        //std::cout << __LINE__ << " Enter a char: ";
+        //std::cin >> a;
+        uint16_t value16;
+        value16 = 0x0000;
+        //std::cout << __LINE__ << " Enter a char: ";
+        //std::cin >> a;
+        CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+        /*if (ret != cvSuccess) {
+            qDebug() << "Error while trying to write set trigger acquisition mode opcode:";
+            qDebug() << "Error code is: " << ret;
+            qDebug() << "Meaning: " << CAENVME_DecodeError(ret);
+        }*/
+        //std::cout << __LINE__ << " Enter a char: ";
+        //std::cin >> a;
+}
+
+void TDCModule::setContinuousAcquisitionMode()
+{
+        //char a = 'a';
+        //std::cout << __LINE__ << " Enter a char: ";
+        //std::cin >> a;
+        //waitForWriteOK();
+        //std::cout << __LINE__ << " Enter a char: ";
+        //std::cin >> a;
+        uint16_t value16;
+        value16 = 0x0100;
+        //std::cout << __LINE__ << " Enter a char: ";
+        //std::cin >> a;
+        CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+        /*if (ret != cvSuccess) {
+            qDebug() << "Error while trying to write set trigger acquisition mode opcode:";
+            qDebug() << "Error code is: " << ret;
+            qDebug() << "Meaning: " << CAENVME_DecodeError(ret);
+        }*/
+        //std::cout << __LINE__ << " Enter a char: ";
+        //std::cin >> a;
+}
+
+void TDCModule::setWindowWidth(uint16_t width)
+{
+        uint16_t value16b;
+        //char a = 'a';
+        //std::cout << __LINE__ << " Enter a char: ";
+        //std::cin >> a;
+        // set window width
+        waitForWriteOK();
+        value16b = 0x1000;
+        CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16b, cvA32_U_DATA, cvD16);
+        //std::cout << __LINE__ << " Enter a char: ";
+        //std::cin >> a;
+        waitForWriteOK();
+        //std::cout << __LINE__ << " Enter a char: ";
+        //std::cin >> a;
+        value16b = width / 25;
+        CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16b, cvA32_U_DATA, cvD16);
+        //std::cout << __LINE__ << " Enter a char: ";
+        //std::cin >> a;
+}
+
+void TDCModule::setWindowOffset(int16_t offset)
+{
+        uint16_t value16;
+        //char a = 'a';
+        //std::cout << __LINE__ << " Enter a char: ";
+        //std::cin >> a;
+        waitForWriteOK();
+        value16 = 0x1100; // OPCODE 11XX set window offset
+        CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+        //std::cout << __LINE__ << " Enter a char: ";
+        //std::cin >> a;
+        waitForWriteOK();
+        value16 = offset / 25; // cast to unsigned
+        CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+
+}
+
+void TDCModule::setExtraSearchWindow()
+{
+        uint16_t value16;
+        //char a = 'a';
+        //std::cout << __LINE__ << " Enter a char: ";
+        //std::cin >> a;
+        waitForWriteOK();
+        value16 = 0x1200; // OPCODE 12XX set extra search margin
+        CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+        //std::cout << __LINE__ << " Enter a char: ";
+        //std::cin >> a;
+        waitForWriteOK();
+        value16 = 0x0004; // 0.1 us extra search margin value
+        CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+
+}
+
+void TDCModule::setRejectMargin()
+{
+
+    uint16_t value16 = 0x1300; // OPCODE 13XX set reject margin
+    //char a = 'a';
+    //std::cout << __LINE__ << " Enter a char: ";
+    //std::cin >> a;
+    waitForWriteOK();
+    CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+    //std::cout << __LINE__ << " Enter a char: ";
+    //std::cin >> a;
+    waitForWriteOK();
+    value16 = 0x0001; // 0.025 us reject margin value
+    CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+
+}
+
+void TDCModule::readAcqMode()
+{
+        uint16_t value16;
+
+        waitForWriteOK();
+        value16 = 0x0200;
+        CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+
+        waitForReadOK();
+        CAENVME_ReadCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+        std::cout << "Acquisition mode: " << (value16 & 0x1) << std::endl;
+}
+
+
+bool TDCModule::setTriggerMode(uint16_t windowWidth, int16_t windowOffset)
+{
+
+    readConfig();
+    //setTriggerAcquisitionMode();
+    readAcqMode();
+
     tdcWindowWidth = windowWidth;
     tdcWindowOffset = windowOffset;
 
@@ -55,41 +224,119 @@ bool TDCModule::setTriggerMode(u_int16_t windowWidth, int16_t windowOffset)
         return false;
     }
 
-    uint16_t value16;
+    setTriggerAcquisitionMode();
+    setWindowWidth(windowWidth);
+    setWindowOffset(windowOffset);
 
+    readConfig();
+    readAcqMode();
+
+    //uint16_t value16;
+
+    //setWindowWidth(tdcWindowWidth / 25);
+    /*
     // set window width
     waitForWriteOK();
     value16 = 0x1000; // OPCODE 10XX set window width
-    CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+
+    CVErrorCodes ret = CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+    if (ret != cvSuccess) {
+        qDebug() << "Error while trying to write set window width opcode:";
+        qDebug() << "Error code is: " << ret;
+        qDebug() << "Meaning: " << CAENVME_DecodeError(ret);
+	return false;
+    }
 
     waitForWriteOK();
+    std::cout << tdcWindowWidth << std::endl;
     value16 = tdcWindowWidth / 25;
-    CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+    std::cout << value16 << std::endl;
+    std::cout << __LINE__ << " Enter a char: ";
+    std::cin >> a;
+    ret = CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+    if (ret != cvSuccess) {
+        qDebug() << "Error while trying to write window width:";
+        qDebug() << "Error code is: " << ret;
+        qDebug() << "Meaning: " << CAENVME_DecodeError(ret);
+	return false;
+    }
+    */
 
+    //setWindowOffset((uint16_t)(tdcWindowOffset / 25));
+    /*
     waitForWriteOK();
     value16 = 0x1100; // OPCODE 11XX set window offset
-    CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+    std::cout << __LINE__ << " Enter a char: ";
+    std::cin >> a;
+    ret = CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+    if (ret != cvSuccess) {
+        qDebug() << "Error while trying to write set window offset opcode:";
+        qDebug() << "Error code is: " << ret;
+        qDebug() << "Meaning: " << CAENVME_DecodeError(ret);
+	return false;
+    }
 
     waitForWriteOK();
+    std::cout << tdcWindowOffset << std::endl;
     value16 = tdcWindowOffset / 25; // cast to unsigned
-    CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+    std::cout << value16 << std::endl;
+    std::cout << __LINE__ << " Enter a char: ";
+    std::cin >> a;
+    ret = CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+    if (ret != cvSuccess) {
+        qDebug() << "Error while trying to write window offset:";
+        qDebug() << "Error code is: " << ret;
+        qDebug() << "Meaning: " << CAENVME_DecodeError(ret);
+	return false;
+    }
+    */
 
+    //setExtraSearchWindow();
+    /*
     waitForWriteOK();
     value16 = 0x1200; // OPCODE 12XX set extra search margin
-    CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+    ret = CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+    if (ret != cvSuccess) {
+        qDebug() << "Error while trying to write extra search margin opcode:";
+        qDebug() << "Error code is: " << ret;
+        qDebug() << "Meaning: " << CAENVME_DecodeError(ret);
+	return false;
+    }
 
     waitForWriteOK();
     value16 = 0x0004; // 0.1 us extra search margin value
-    CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+    ret = CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+    if (ret != cvSuccess) {
+        qDebug() << "Error while trying to write extra search margin:";
+        qDebug() << "Error code is: " << ret;
+        qDebug() << "Meaning: " << CAENVME_DecodeError(ret);
+	return false;
+    }
+    */
 
+    //setRejectMargin();
+    /*
     waitForWriteOK();
     value16 = 0x1300; // OPCODE 13XX set reject margin
-    CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+    ret = CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+    if (ret != cvSuccess) {
+        qDebug() << "Error while trying to write set reject margin opcode:";
+        qDebug() << "Error code is: " << ret;
+        qDebug() << "Meaning: " << CAENVME_DecodeError(ret);
+	return false;
+    }
 
     waitForWriteOK();
     value16 = 0x0001; // 0.025 us reject margin value
-    CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
-
+    ret = CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+    if (ret != cvSuccess) {
+        qDebug() << "Error while trying to write reject margin:";
+        qDebug() << "Error code is: " << ret;
+        qDebug() << "Meaning: " << CAENVME_DecodeError(ret);
+	return false;
+    }
+    */
+    qDebug() << "Good to go: true";
     return true;
 
 }
@@ -101,21 +348,41 @@ void TDCModule::readEvents(std::vector<int>* values)
 
     // read Status register
     //qDebug() << "Read status register";
-    CAENVME_ReadCycle(handleChef, baseAddress + 0x1002, &value16, cvA32_U_DATA, cvD16);
+    CVErrorCodes ret = CAENVME_ReadCycle(handleChef, baseAddress + 0x1002, &value16, cvA32_U_DATA, cvD16);
+    if (ret != cvSuccess) {
+        qDebug() << "Error while trying to read status register:";
+        qDebug() << "Error code is: " << ret;
+        qDebug() << "Meaning: " << CAENVME_DecodeError(ret);
+    }
 
     if (value16 & 0x1) {
         //qDebug() << "Data ready";
-        CAENVME_ReadCycle(handleChef, baseAddress + 0x0000, &value32, cvA32_U_DATA, cvD32);
+        ret = CAENVME_ReadCycle(handleChef, baseAddress + 0x0000, &value32, cvA32_U_DATA, cvD32);
+        if (ret != cvSuccess) {
+            qDebug() << "Error while trying to read event buffer:";
+            qDebug() << "Error code is: " << ret;
+            qDebug() << "Meaning: " << CAENVME_DecodeError(ret);
+        }
         int header = ((value32 >> 27) & 0x1F);
         if (header == 0x8) { // Global header
-            CAENVME_ReadCycle(handleChef, baseAddress + 0x0000, &value32, cvA32_U_DATA, cvD32);
+            ret = CAENVME_ReadCycle(handleChef, baseAddress + 0x0000, &value32, cvA32_U_DATA, cvD32);
+            if (ret != cvSuccess) {
+                qDebug() << "Error while trying to read event buffer:";
+                qDebug() << "Error code is: " << ret;
+                qDebug() << "Meaning: " << CAENVME_DecodeError(ret);
+            }
             header = ((value32 >> 27) & 0x1F);
             if (header == 0x1) { // TDC header
                 int nChannel = 0;
                 int tdcTimes[16];
                 QString output = "";
                 while (true) {
-                    CAENVME_ReadCycle(handleChef, baseAddress + 0x0000, &value32, cvA32_U_DATA, cvD32);
+                    ret = CAENVME_ReadCycle(handleChef, baseAddress + 0x0000, &value32, cvA32_U_DATA, cvD32);
+                    if (ret != cvSuccess) {
+                        qDebug() << "Error while trying to read event buffer:";
+                        qDebug() << "Error code is: " << ret;
+                        qDebug() << "Meaning: " << CAENVME_DecodeError(ret);
+                    }
                     header = ((value32 >> 27) & 0x1F);
                     if (header != 0x0) {
                         break; // if not TDC measurement
@@ -129,7 +396,7 @@ void TDCModule::readEvents(std::vector<int>* values)
                     }
                 }
                 if (nChannel == 2) {
-                    qDebug() << output;
+                    //qDebug() << output;
                     output += "\n";
                     double difference = (tdcTimes[stopChannel] - tdcTimes[startChannel])/1000.0;
                     if (difference < 0) {
@@ -155,12 +422,17 @@ void TDCModule::waitForWriteOK()
 {
     uint16_t value16;
     bool WRITE_OK = false;
-
+    CVErrorCodes ret;
     do {
-        CAENVME_ReadCycle(handleChef, baseAddress + 0x1030, &value16, cvA32_U_DATA, cvD16);
+        ret = CAENVME_ReadCycle(handleChef, baseAddress + 0x1030, &value16, cvA32_U_DATA, cvD16);
         WRITE_OK = ((value16 >> 0) & 0x1);
-        usleep(10);
-    } while (!WRITE_OK);
+        QThread::msleep(100);
+        if (ret != cvSuccess) {
+            qDebug() << "Error while trying to write reject margin:";
+            qDebug() << "Error code is: " << ret;
+            qDebug() << "Meaning: " << CAENVME_DecodeError(ret);
+        }
+    } while (!WRITE_OK || ret != cvSuccess);
     return;
 
 }
@@ -169,12 +441,18 @@ void TDCModule::waitForReadOK()
 {
     uint16_t value16;
     bool READ_OK = false;
+    CVErrorCodes ret;
 
     do {
-        CAENVME_ReadCycle(handleChef, baseAddress + 0x1030, &value16, cvA32_U_DATA, cvD16);
+        ret = CAENVME_ReadCycle(handleChef, baseAddress + 0x1030, &value16, cvA32_U_DATA, cvD16);
         READ_OK = ((value16 >> 1) & 0x1);
-        usleep(10);
-    } while (!READ_OK);
+        QThread::msleep(100);
+        if (ret != cvSuccess) {
+            qDebug() << "Error while trying to read status:";
+            qDebug() << "Error code is: " << ret;
+            qDebug() << "Meaning: " << CAENVME_DecodeError(ret);
+        }
+    } while (!READ_OK || ret != cvSuccess);
     return;
 
 }

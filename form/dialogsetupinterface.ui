@@ -6,18 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>353</width>
-    <height>276</height>
+    <width>570</width>
+    <height>342</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
   <widget class="QCheckBox" name="checkBox_hv_module">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>100</y>
+     <x>310</x>
+     <y>180</y>
      <width>111</width>
      <height>20</height>
     </rect>
@@ -32,8 +35,8 @@
   <widget class="QPushButton" name="pushButton_done">
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>240</y>
+     <x>450</x>
+     <y>310</y>
      <width>80</width>
      <height>22</height>
     </rect>
@@ -45,8 +48,8 @@
   <widget class="QPushButton" name="pushButton_cancel">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>240</y>
+     <x>360</x>
+     <y>310</y>
      <width>80</width>
      <height>22</height>
     </rect>
@@ -58,8 +61,8 @@
   <widget class="QCheckBox" name="checkBox_scaler_module">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>120</y>
+     <x>310</x>
+     <y>200</y>
      <width>121</width>
      <height>20</height>
     </rect>
@@ -71,8 +74,8 @@
   <widget class="QCheckBox" name="checkBox_tdc_module">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>140</y>
+     <x>310</x>
+     <y>220</y>
      <width>101</width>
      <height>20</height>
     </rect>
@@ -84,8 +87,8 @@
   <widget class="QCheckBox" name="checkBox_qdc_module">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>160</y>
+     <x>310</x>
+     <y>240</y>
      <width>121</width>
      <height>20</height>
     </rect>
@@ -97,8 +100,8 @@
   <widget class="QCheckBox" name="checkBox_efficiency_tab">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>180</y>
+     <x>310</x>
+     <y>260</y>
      <width>111</width>
      <height>20</height>
     </rect>
@@ -110,21 +113,21 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>341</width>
+     <x>20</x>
+     <y>90</y>
+     <width>531</width>
      <height>51</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;Select the experiment setup you want to use or simply&lt;br/&gt;choose the modules you need for the GUI interface.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Select a predefined experiment setup you want to use or simply&lt;br/&gt;choose the modules you need for the GUI interface.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QCheckBox" name="checkBox_muon_life">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>100</y>
+     <x>90</x>
+     <y>180</y>
      <width>111</width>
      <height>20</height>
     </rect>
@@ -136,8 +139,8 @@
   <widget class="QCheckBox" name="checkBox_cosmic_muon">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>130</y>
+     <x>90</x>
+     <y>210</y>
      <width>141</width>
      <height>20</height>
     </rect>
@@ -149,8 +152,8 @@
   <widget class="QCheckBox" name="checkBox_cherenkov_muon">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>160</y>
+     <x>90</x>
+     <y>240</y>
      <width>151</width>
      <height>20</height>
     </rect>
@@ -162,8 +165,8 @@
   <widget class="QCheckBox" name="checkBox_cherenkov_electron">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>190</y>
+     <x>90</x>
+     <y>270</y>
      <width>161</width>
      <height>20</height>
     </rect>
@@ -175,8 +178,8 @@
   <widget class="Line" name="line">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>70</y>
+     <x>260</x>
+     <y>150</y>
      <width>20</width>
      <height>141</height>
     </rect>
@@ -188,8 +191,8 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>240</x>
-     <y>70</y>
+     <x>340</x>
+     <y>150</y>
      <width>59</width>
      <height>14</height>
     </rect>
@@ -201,14 +204,40 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>70</y>
+     <x>120</x>
+     <y>150</y>
      <width>59</width>
      <height>14</height>
     </rect>
    </property>
    <property name="text">
     <string>Setups</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>511</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:24pt; color:#55aaff;&quot;&gt;Welcome to the IIHE laboratory&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>320</y>
+     <width>121</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; color:#55aaff;&quot;&gt;version 1.0 (2017)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
  </widget>

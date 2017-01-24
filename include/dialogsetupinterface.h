@@ -24,7 +24,7 @@ private slots:
 
     void on_pushButton_cancel_clicked();
 
-    void on_checkBox_efficiency_tab_stateChanged(int arg1);
+    void on_checkBox_efficiency_tab_stateChanged();
 
     void on_checkBox_muon_life_clicked();
 

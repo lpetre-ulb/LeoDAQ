@@ -17,7 +17,7 @@ private:
     int stopChannel;
 
     // taking data
-    u_int16_t tdcWindowWidth;
+    uint16_t tdcWindowWidth;
     int16_t tdcWindowOffset;
 
     void waitForReadOK();
@@ -31,10 +31,18 @@ public:
     QString getFirmwareRevision();
 
     void clear();
-    bool setTriggerMode(u_int16_t windowWidth, int16_t windowOffset);
+    bool setTriggerMode(uint16_t windowWidth, int16_t windowOffset);
     void setStartStopChannels(int start, int stop);
 
     void readEvents(std::vector<int>* values);
+    void setTriggerAcquisitionMode();
+    void setContinuousAcquisitionMode();
+    void setWindowWidth(uint16_t);
+    void setWindowOffset(int16_t);
+    void setExtraSearchWindow();
+    void setRejectMargin();
+    void readAcqMode();
+    void readConfig();
 
 
 };
