@@ -20,8 +20,9 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setWindowTitle("IIHE DAQ - version 1.0 (2017)");
     this->setCentralWidget(ui->tabWidget);
     this->setFixedSize(this->size());
-    this->setStyleSheet("background-color:white;");
-    this->setStyleSheet("QMessageBox {background-color: white;}");
+    //this->setStyleSheet("background-color:white;");
+    ui->tabWidget->setStyleSheet("QTabWidget {background-color:white;}");
+    //this->setStyleSheet("QMessageBox {background-color: white;}");
 
 
     QVector<QString> config = setUpInterface();
@@ -101,7 +102,7 @@ void MainWindow::connectToVMECrate()
 {
     while (CAENVME_Init(cvV1718, 0, 0, &handleChef) != cvSuccess) {
 
-        QMessageBox::StandardButton resBtn = QMessageBox::question(this,
+        QMessageBox::StandardButton resBtn = QMessageBox::question(0,
             "Error",
             tr("Impossible to connect to VME crate!\nPlease, check that the usb cable is connected. If it is connected, check if it is seen in /dev/usb/\nTry again ?"),
             QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,

@@ -82,7 +82,7 @@
   <widget class="QLabel" name="label_8">
    <property name="geometry">
     <rect>
-     <x>680</x>
+     <x>675</x>
      <y>55</y>
      <width>31</width>
      <height>17</height>
@@ -494,7 +494,7 @@
     <rect>
      <x>555</x>
      <y>55</y>
-     <width>51</width>
+     <width>41</width>
      <height>17</height>
     </rect>
    </property>
@@ -610,7 +610,7 @@
   <customwidget>
    <class>QCustomPlot</class>
    <extends>QWidget</extends>
-   <header location="global">qcustomplot.h</header>
+   <header>qcustomplot.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

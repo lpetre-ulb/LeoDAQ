@@ -39,12 +39,12 @@ void graph::init(const QString &title_, const QString& xLabel_, const QString &y
     qcp->plotLayout()->addElement(0, 0, new QCPPlotTitle(qcp, title));
 
 
-    QLinearGradient plotGradient;
+    /*QLinearGradient plotGradient;
     plotGradient.setStart(0, 0);
     plotGradient.setFinalStop(0, 350);
     plotGradient.setColorAt(0, QColor(180, 180, 180));
     plotGradient.setColorAt(1, QColor(150, 150, 150));
-    qcp->setBackground(plotGradient);
+    qcp->setBackground(plotGradient);*/
 }
 
 
