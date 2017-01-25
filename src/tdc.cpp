@@ -154,19 +154,19 @@ void tdc::updateStatUiAndPlot(double difference)
 
         // rate estimate
         QTime currentTime = QTime::currentTime();
-        int timeFromBeginingOfRun = time.msecsTo(currentTime);
-        ui->lcdNumber_tdc_rate->display((int)((counter*1000.0/(timeFromBeginingOfRun))*1000)/1000.0);
+        long timeFromBeginingOfRun = time.msecsTo(currentTime);
+        ui->lcdNumber_tdc_rate->display((long)((counter*1000.0/(timeFromBeginingOfRun))*1000)/1000.0);
 
         // mean arrival estimate
-        int arrivalTime = prevTime.msecsTo(currentTime);
+        long arrivalTime = prevTime.msecsTo(currentTime);
         mean_arrival *= (counter-1);
         mean_arrival_square *= (counter-1);
         mean_arrival += arrivalTime;
         mean_arrival_square += arrivalTime*arrivalTime;
         mean_arrival /= counter;
         mean_arrival_square /= counter;
-        ui->lcdNumber_tdc_mean_arrival->display((int)(mean_arrival)/1000.0);
-        ui->lcdNumber_tdc_rms_arrival->display((int)sqrt(mean_arrival_square - mean_arrival*mean_arrival)/1000.0);
+        ui->lcdNumber_tdc_mean_arrival->display((long)(mean_arrival)/1000.0);
+        ui->lcdNumber_tdc_rms_arrival->display((long)sqrt(mean_arrival_square - mean_arrival*mean_arrival)/1000.0);
 
         // lifetime
         mean_lifetime *= (counter - 1);
@@ -175,9 +175,9 @@ void tdc::updateStatUiAndPlot(double difference)
         mean_lifetime_square += (difference / 1000.0) * (difference / 1000.0);
         mean_lifetime /= counter;
         mean_lifetime_square /= counter;
-        ui->lcdNumber_tdc_mean_lifetime->display((int)(mean_lifetime*1000)/1000.0);
-        ui->lcdNumber_tdc_rms_lifetime->display((int)(sqrt(mean_lifetime_square - mean_lifetime*mean_lifetime)*1000)/1000.0);
-        ui->lcdNumber_tdc_last_lifetime->display((int)(difference)/1000.0);
+        ui->lcdNumber_tdc_mean_lifetime->display((long)(mean_lifetime*1000)/1000.0);
+        ui->lcdNumber_tdc_rms_lifetime->display((long)(sqrt(mean_lifetime_square - mean_lifetime*mean_lifetime)*1000)/1000.0);
+        ui->lcdNumber_tdc_last_lifetime->display((long)(difference)/1000.0);
 
         // plot
         hTDC->updatePlot(difference);

@@ -8,8 +8,14 @@ DialogSetupInterface::DialogSetupInterface(QWidget *parent) :
     ui(new Ui::DialogSetupInterface)
 {
     ui->setupUi(this);
+    this->setFixedSize(609, 453);
     this->setWindowTitle("Welcome to the IIHE DAQ - version 1.0 (2017)");
-    this->setStyleSheet("background-color:white;");
+    this->setStyleSheet("QDialog {background:url(:/cloudchamber.png);}");
+    this->setStyleSheet("QLabel {background: transparent;}");
+    ui->pushButton_done->setStyleSheet("color:#00007f");
+    ui->pushButton_cancel->setStyleSheet("color:#00007f");
+    ui->widget_conf->setStyleSheet("QCheckBox {border:none; font-size:12pt; color:#00007f}QLabel {font-size:12pt; color:#00007f}");
+
     if (this->exec() == QDialog::Rejected) {
         qDebug() << "Not configured";
     }
