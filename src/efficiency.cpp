@@ -9,6 +9,8 @@ Efficiency::Efficiency(QWidget *parent, int handleChef_) :
     ui(new Ui::Efficiency)
 {
     ui->setupUi(this);
+    ui->pushButton_efficiency_file_name->setVisible(false);
+    ui->lineEdit_efficiency_file_name->setEnabled(false);
 
     // change cosmetics
     makeItNice();
@@ -32,7 +34,7 @@ Efficiency::Efficiency(QWidget *parent, int handleChef_) :
     grEfficiency = new graph(ui->qcp_efficiency, "Efficiency vs. HV", "HV (V)", "Efficiency");
     grEfficiency->adjustPlot(ui->spinBox_efficiency_hvmin->value(), ui->spinBox_efficiency_hvmax->value());
 
-
+    setFileName();
 
 }
 
@@ -300,4 +302,19 @@ void Efficiency::on_pushButton_efficiency_file_name_clicked()
 
     ui->lineEdit_efficiency_file_name->setText(newFileName == "" ? fileName : newFileName);
 
+}
+
+void Efficiency::on_pushButton_save_graph_clicked()
+{
+    QString plotFileName = ui->lineEdit_efficiency_file_name->text();
+    int dotPosition = plotFileName.lastIndexOf(".");
+    if (dotPosition < 0) {
+        qDebug() << "No extension in fileName";
+    }
+    else {
+
+        plotFileName = plotFileName.left(dotPosition) + ".pdf";
+        qDebug() << "Plot file name: " << plotFileName;
+    }
+    ui->qcp_efficiency->savePdf(plotFileName);
 }

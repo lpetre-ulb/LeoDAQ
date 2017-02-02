@@ -49,7 +49,9 @@ private slots:
 
     void on_pushButton_efficiency_file_name_clicked();
 
+    void setFileName();
 
+    void on_pushButton_save_graph_clicked();
 
 private:
     Ui::Efficiency *ui;
@@ -64,7 +66,6 @@ private:
     QTimer* timer;
     int interval;
     void launchTimer(int interval);
-    void setFileName();
 
 
 };

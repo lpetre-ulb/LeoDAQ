@@ -15,14 +15,14 @@ qdc::qdc(QWidget *parent, int32_t handleChef_) :
 
 
 
-    hQDC = new histogram(ui->qdc_profile, "Integral charge profile", "charge (pC)", "nEvents");
+    hQDC = new histogram(ui->qdc_profile, "Integral charge profile", "ADC count", "nEvents");
     hQDC->adjustPlot(ui->spinBox_qdc_nbins->value(), ui->doubleSpinBox_qdc_vmin->value(), ui->doubleSpinBox_qdc_vmax->value());
 
     nExp = ui->spinBox_qdc_nevents->value();
 
     ui->pushButton_stopprofile->setEnabled(false);
     for (int i = 0; i < module->getNChannels(); i++) module->ConfigureChannel(i, false, 0);
-
+    setFileName();
 }
 
 qdc::~qdc()
@@ -126,7 +126,17 @@ void qdc::on_doubleSpinBox_qdc_vmax_valueChanged(double vMax)
 void qdc::on_pushButton_qdc_startprofile_clicked()
 {
 
-    nExp = ui->spinBox_qdc_nevents->value();
+    int inputChannel = ui->spinBox_input_channel->value();
+    bool enableChannel = module->ReadChannelStatus(inputChannel);
+
+    if (!enableChannel) {
+        QMessageBox::StandardButton ret = QMessageBox::question(this,
+                                 "Warning!",
+                                 "The channel you have selected is not enabled. Continue anyway ?",
+                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+        if (ret == QMessageBox::No) return;
+    }
+
     ui->spinBox_qdc_nevents->setEnabled(false);
     ui->pushButton_clearChannel->setEnabled(false);
     ui->pushButton_clearProfile->setEnabled(false);
@@ -136,13 +146,10 @@ void qdc::on_pushButton_qdc_startprofile_clicked()
     ui->spinBox_qdc_nbins->setEnabled(false);
     ui->doubleSpinBox_qdc_vmin->setEnabled(false);
     ui->doubleSpinBox_qdc_vmax->setEnabled(false);
+    ui->spinBox_input_channel->setEnabled(false);
+    nExp = ui->spinBox_qdc_nevents->value();
 
 
-    //QString fileName = ui->lineEdit_qdc_file_name->text();
-    //while (fileName == "") {
-    //    on_pushButton_qdc_file_name_clicked();
-    //    fileName = ui->lineEdit_qdc_file_name->text();
-    //}
     setFileName();
     QString fileName = ui->lineEdit_qdc_file_name->text();
 
@@ -161,15 +168,15 @@ void qdc::on_pushButton_qdc_startprofile_clicked()
               uint32_t value32 = 0;
 
               do {
-                  module->ReadChannelData(0, &value32, &validData);
+                  module->ReadChannelData(inputChannel, &value32, &validData);
                   QCoreApplication::processEvents();
 
 
               } while(!validData && nExp != 0);
 
               if (validData) {
-                  hQDC->updatePlot(value32/10.0);
-                  stream << QString::number(value32/10.0) << "\n";
+                  hQDC->updatePlot(value32);
+                  stream << QString::number(value32) << "\n";
 
               }
           }
@@ -186,6 +193,7 @@ void qdc::on_pushButton_qdc_startprofile_clicked()
     ui->spinBox_qdc_nbins->setEnabled(true);
     ui->doubleSpinBox_qdc_vmin->setEnabled(true);
     ui->doubleSpinBox_qdc_vmax->setEnabled(true);
+    ui->spinBox_input_channel->setEnabled(true);
 
 }
 
@@ -254,4 +262,19 @@ void qdc::on_pushButton_qdc_file_name_clicked()
                                        QString(), QStandardPaths::LocateDirectory));
 
     ui->lineEdit_qdc_file_name->setText(newFileName == "" ? fileName : newFileName);
+}
+
+void qdc::on_pushButton_save_plot_clicked()
+{
+    QString plotFileName = ui->lineEdit_qdc_file_name->text();
+    int dotPosition = plotFileName.lastIndexOf(".");
+    if (dotPosition < 0) {
+        qDebug() << "No extension in fileName";
+    }
+    else {
+
+        plotFileName = plotFileName.left(dotPosition) + ".pdf";
+        qDebug() << "Plot file name: " << plotFileName;
+    }
+    ui->qdc_profile->savePdf(plotFileName);
 }

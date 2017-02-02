@@ -16,8 +16,8 @@
   <widget class="QPushButton" name="pushButton_clearChannel">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>390</y>
+     <x>30</x>
+     <y>410</y>
      <width>181</width>
      <height>21</height>
     </rect>
@@ -30,7 +30,7 @@
    <property name="geometry">
     <rect>
      <x>290</x>
-     <y>20</y>
+     <y>60</y>
      <width>651</width>
      <height>601</height>
     </rect>
@@ -39,8 +39,8 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>510</y>
+     <x>30</x>
+     <y>530</y>
      <width>41</width>
      <height>21</height>
     </rect>
@@ -52,8 +52,8 @@
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>555</y>
+     <x>30</x>
+     <y>575</y>
      <width>41</width>
      <height>21</height>
     </rect>
@@ -65,8 +65,8 @@
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>595</y>
+     <x>30</x>
+     <y>615</y>
      <width>41</width>
      <height>21</height>
     </rect>
@@ -78,24 +78,24 @@
   <widget class="QSpinBox" name="spinBox_qdc_nbins">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>505</y>
+     <x>130</x>
+     <y>525</y>
      <width>81</width>
      <height>31</height>
     </rect>
    </property>
    <property name="maximum">
-    <number>1000</number>
+    <number>4096</number>
    </property>
    <property name="value">
-    <number>100</number>
+    <number>4096</number>
    </property>
   </widget>
   <widget class="QLabel" name="label_6">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>350</y>
+     <x>20</x>
+     <y>370</y>
      <width>131</width>
      <height>20</height>
     </rect>
@@ -107,11 +107,14 @@
   <widget class="QSpinBox" name="spinBox_qdc_nevents">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>345</y>
+     <x>140</x>
+     <y>365</y>
      <width>81</width>
-     <height>31</height>
+     <height>27</height>
     </rect>
+   </property>
+   <property name="minimum">
+    <number>-1</number>
    </property>
    <property name="maximum">
     <number>10000000</number>
@@ -123,8 +126,8 @@
   <widget class="QPushButton" name="pushButton_qdc_startprofile">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>420</y>
+     <x>30</x>
+     <y>440</y>
      <width>71</width>
      <height>21</height>
     </rect>
@@ -136,8 +139,8 @@
   <widget class="QPushButton" name="pushButton_stopprofile">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>420</y>
+     <x>140</x>
+     <y>440</y>
      <width>71</width>
      <height>21</height>
     </rect>
@@ -149,21 +152,21 @@
   <widget class="QDoubleSpinBox" name="doubleSpinBox_qdc_vmin">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>550</y>
+     <x>130</x>
+     <y>570</y>
      <width>81</width>
      <height>31</height>
     </rect>
    </property>
    <property name="maximum">
-    <double>1000.000000000000000</double>
+    <double>4096.000000000000000</double>
    </property>
   </widget>
   <widget class="QDoubleSpinBox" name="doubleSpinBox_qdc_vmax">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>590</y>
+     <x>130</x>
+     <y>610</y>
      <width>81</width>
      <height>31</height>
     </rect>
@@ -172,17 +175,17 @@
     <double>0.000000000000000</double>
    </property>
    <property name="maximum">
-    <double>4000.000000000000000</double>
+    <double>4096.000000000000000</double>
    </property>
    <property name="value">
-    <double>400.000000000000000</double>
+    <double>4096.000000000000000</double>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_clearProfile">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>630</y>
+     <x>30</x>
+     <y>650</y>
      <width>181</width>
      <height>31</height>
     </rect>
@@ -194,8 +197,8 @@
   <widget class="QLabel" name="label_qdc_2">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>40</y>
+     <x>20</x>
+     <y>50</y>
      <width>121</width>
      <height>17</height>
     </rect>
@@ -210,8 +213,8 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>65</y>
+     <x>130</x>
+     <y>75</y>
      <width>113</width>
      <height>27</height>
     </rect>
@@ -220,8 +223,8 @@
   <widget class="QLabel" name="label_qdc_3">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>70</y>
+     <x>20</x>
+     <y>80</y>
      <width>101</width>
      <height>17</height>
     </rect>
@@ -233,8 +236,8 @@
   <widget class="QSpinBox" name="spinBox_qdc_rotary_switches">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>35</y>
+     <x>180</x>
+     <y>45</y>
      <width>61</width>
      <height>24</height>
     </rect>
@@ -252,7 +255,7 @@
   <widget class="QLabel" name="label_qdc_1">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>20</x>
      <y>10</y>
      <width>131</width>
      <height>31</height>
@@ -272,7 +275,7 @@
   <widget class="QWidget" name="widget_qdc_display" native="true">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>20</x>
      <y>170</y>
      <width>271</width>
      <height>121</height>
@@ -351,8 +354,8 @@
      <rect>
       <x>0</x>
       <y>80</y>
-      <width>81</width>
-      <height>27</height>
+      <width>241</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
@@ -380,7 +383,7 @@
    <property name="geometry">
     <rect>
      <x>340</x>
-     <y>635</y>
+     <y>665</y>
      <width>521</width>
      <height>27</height>
     </rect>
@@ -390,7 +393,7 @@
    <property name="geometry">
     <rect>
      <x>870</x>
-     <y>635</y>
+     <y>665</y>
      <width>71</width>
      <height>27</height>
     </rect>
@@ -402,8 +405,8 @@
   <widget class="QLabel" name="label_qcd_8">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>640</y>
+     <x>290</x>
+     <y>670</y>
      <width>31</width>
      <height>17</height>
     </rect>
@@ -415,7 +418,7 @@
   <widget class="QLabel" name="label_qdc_4">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>20</x>
      <y>130</y>
      <width>251</width>
      <height>31</height>
@@ -435,7 +438,7 @@
   <widget class="QLabel" name="label_qdc_5">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>20</x>
      <y>300</y>
      <width>251</width>
      <height>31</height>
@@ -455,8 +458,8 @@
   <widget class="QLabel" name="label_qdc_6">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>470</y>
+     <x>20</x>
+     <y>490</y>
      <width>151</width>
      <height>31</height>
     </rect>
@@ -470,6 +473,45 @@
    </property>
    <property name="text">
     <string>Histograme</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_8">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>340</y>
+     <width>131</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input channel:</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="spinBox_input_channel">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>335</y>
+     <width>47</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>15</number>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_save_plot">
+   <property name="geometry">
+    <rect>
+     <x>860</x>
+     <y>30</y>
+     <width>80</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Save Plot</string>
    </property>
   </widget>
  </widget>

@@ -24,7 +24,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tabWidget->setStyleSheet("QTabWidget {background-color:white;}");
     //this->setStyleSheet("QMessageBox {background-color: white;}");
 
-
     QVector<QString> config = setUpInterface();
     if (config.isEmpty()) {
         throw std::runtime_error("Cancelation or no configuration.");

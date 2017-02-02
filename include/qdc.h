@@ -43,6 +43,8 @@ private slots:
 
     void on_pushButton_qdc_file_name_clicked();
 
+    void on_pushButton_save_plot_clicked();
+
 private:
     Ui::qdc *ui;
     QDCModule *module;
