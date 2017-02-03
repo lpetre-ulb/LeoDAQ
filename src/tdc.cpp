@@ -154,8 +154,12 @@ void tdc::updateStatUiAndPlot(double difference)
 
         // rate estimate
         QTime currentTime = QTime::currentTime();
-        long timeFromBeginingOfRun = time.msecsTo(currentTime);
-        ui->lcdNumber_tdc_rate->display((long)((counter*1000.0/(timeFromBeginingOfRun))*1000)/1000.0);
+        long long timeFromBeginingOfRun = time.msecsTo(currentTime);
+
+        double rate = (double) counter / timeFromBeginingOfRun;
+
+        //ui->lcdNumber_tdc_rate->display((long)((counter*1000.0/(timeFromBeginingOfRun))*1000)/1000.0);
+        ui->lcdNumber_tdc_rate->display(rate);
 
         // mean arrival estimate
         long arrivalTime = prevTime.msecsTo(currentTime);
