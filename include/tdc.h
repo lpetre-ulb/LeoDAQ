@@ -54,6 +54,8 @@ private slots:
 
     void on_pushButton_set_offset_clicked();
 
+    void on_pushButton_save_plot_clicked();
+
 public:
     bool stillRunning();
     void stopRun();

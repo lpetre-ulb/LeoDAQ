@@ -14,6 +14,8 @@ tdc::tdc(QWidget *parent, int handleChef_) :
     ui->pushButton_set_width->setVisible(false);
     ui->pushButton_set_trigger->setVisible(false);
     ui->pushButton_set_cont->setVisible(false);
+    ui->pushButton_tdc_file_name->setVisible(false);
+    ui->lineEdit_tdc_file_name->setEnabled(false);
 
 
     // build the corresponding module
@@ -72,6 +74,7 @@ void tdc::on_pushButton_tdc_clear_tdcs_clicked()
 
 void tdc::on_pushButton_tdc_start_run_clicked()
 {
+
     isRunning = true;
     ui->pushButton_tdc_start_run->setEnabled(!isRunning);
     ui->pushButton_tdc_stop_run->setEnabled(isRunning);
@@ -82,6 +85,8 @@ void tdc::on_pushButton_tdc_start_run_clicked()
 
     uint16_t tdcWindowWidth = ui->spinBox_tdc_window_width->value();
     int16_t tdcWindowOffset = ui->spinBox_tdc_window_offset->value();
+
+    setFileName();
 
     QString fileName = ui->lineEdit_tdc_file_name->text();
     QFile file(fileName);
@@ -367,4 +372,19 @@ void tdc::on_pushButton_set_cont_clicked()
 void tdc::on_pushButton_set_offset_clicked()
 {
     module->setWindowOffset(ui->spinBox_tdc_window_offset->value());
+}
+
+void tdc::on_pushButton_save_plot_clicked()
+{
+    QString plotFileName = ui->lineEdit_tdc_file_name->text();
+    int dotPosition = plotFileName.lastIndexOf(".");
+    if (dotPosition < 0) {
+        qDebug() << "No extension in fileName";
+    }
+    else {
+
+        plotFileName = plotFileName.left(dotPosition) + ".pdf";
+        qDebug() << "Plot file name: " << plotFileName;
+    }
+    ui->qcp_tdc->savePdf(plotFileName);
 }
