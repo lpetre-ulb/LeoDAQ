@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     // configure global view
-    this->setWindowTitle("IIHE DAQ - version 1.0 (2017)");
+    this->setWindowTitle("IIHE DAQ - version 1.1 (2017)");
     this->setCentralWidget(ui->tabWidget);
     this->setFixedSize(this->size());
     //this->setStyleSheet("background-color:white;");
