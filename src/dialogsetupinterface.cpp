@@ -9,7 +9,7 @@ DialogSetupInterface::DialogSetupInterface(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setFixedSize(609, 453);
-    this->setWindowTitle("Welcome to the IIHE DAQ - version 1.0 (2017)");
+    this->setWindowTitle("Welcome to the IIHE DAQ - version 1.1 (2017)");
     this->setStyleSheet("QDialog {background:url(:/cloudchamber.png);}");
     this->setStyleSheet("QLabel {background: transparent;}");
     ui->pushButton_done->setStyleSheet("color:#00007f");
