@@ -156,21 +156,24 @@ void tdc::updateStatUiAndPlot(double difference)
         QTime currentTime = QTime::currentTime();
         long long timeFromBeginingOfRun = time.msecsTo(currentTime);
 
-        double rate = (double) counter / timeFromBeginingOfRun;
+        double rate = counter * 1000.0 / timeFromBeginingOfRun;
 
         //ui->lcdNumber_tdc_rate->display((long)((counter*1000.0/(timeFromBeginingOfRun))*1000)/1000.0);
         ui->lcdNumber_tdc_rate->display(rate);
 
         // mean arrival estimate
-        long arrivalTime = prevTime.msecsTo(currentTime);
+        long long arrivalTime = prevTime.msecsTo(currentTime);
         mean_arrival *= (counter-1);
         mean_arrival_square *= (counter-1);
         mean_arrival += arrivalTime;
         mean_arrival_square += arrivalTime*arrivalTime;
         mean_arrival /= counter;
         mean_arrival_square /= counter;
-        ui->lcdNumber_tdc_mean_arrival->display((long)(mean_arrival)/1000.0);
-        ui->lcdNumber_tdc_rms_arrival->display((long)sqrt(mean_arrival_square - mean_arrival*mean_arrival)/1000.0);
+
+        double mean_arrival_double = mean_arrival / 1000.0;
+        ui->lcdNumber_tdc_mean_arrival->display(mean_arrival_double);
+        double rms_arrival_double = sqrt(mean_arrival_square - mean_arrival*mean_arrival) / 1000.0;
+        ui->lcdNumber_tdc_rms_arrival->display(rms_arrival_double);
 
         // lifetime
         mean_lifetime *= (counter - 1);
