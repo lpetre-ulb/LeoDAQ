@@ -399,9 +399,9 @@ void TDCModule::readEvents(std::vector<int>* values)
                     //qDebug() << output;
                     output += "\n";
                     double difference = (tdcTimes[stopChannel] - tdcTimes[startChannel])/1000.0;
-                    if (difference < 0) {
-                        difference += 52429.500;
-                    }
+                    //if (difference < 0) {
+                    //    difference += 52429.500;
+                    //}
                     //output = QString::number(difference) + "\n";
                     //stream << output;
                     //qDebug() << "difference: " << QString::number(difference);

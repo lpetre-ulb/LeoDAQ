@@ -75,6 +75,36 @@ void tdc::on_pushButton_tdc_clear_tdcs_clicked()
 void tdc::on_pushButton_tdc_start_run_clicked()
 {
 
+
+    uint16_t tdcWindowWidth = ui->spinBox_tdc_window_width->value();
+    int16_t tdcWindowOffset = ui->spinBox_tdc_window_offset->value();
+
+    // check config of trigger window and set it
+    if (tdcWindowOffset + tdcWindowWidth < 0) { //1st case: the trigger matching window precedes the trigger arrival
+        if (-tdcWindowOffset > 51200 || tdcWindowOffset == 0) {
+            qDebug() << "false";
+            QMessageBox::critical(
+                this,
+                "Bad TDC Trigger Config",
+                "When the whole matching window is in the past, the maximum offset is -51200",
+                QMessageBox::Ok
+            );
+            return;
+        }
+    }
+    else if (tdcWindowOffset + tdcWindowWidth > 1000) { // 2nd case: the trigger matching is straddling the trigger or delayed with respect to the trigger
+        qDebug() << "false";
+        QMessageBox::critical(
+            this,
+            "Bad TDC Trigger Config",
+            "When the whole matching window straddling the trigger or delayed with respect to the trigger, the following condition must be fulfilled:\nMatch window width + window offset ≤ 40 clock cycles = 1000 ns",
+            QMessageBox::Ok
+        );
+        return;
+    }
+
+
+
     isRunning = true;
     ui->pushButton_tdc_start_run->setEnabled(!isRunning);
     ui->pushButton_tdc_stop_run->setEnabled(isRunning);
@@ -82,9 +112,6 @@ void tdc::on_pushButton_tdc_start_run_clicked()
     ui->widget_tdc_histogram_config->setEnabled(!isRunning);
 
 
-
-    uint16_t tdcWindowWidth = ui->spinBox_tdc_window_width->value();
-    int16_t tdcWindowOffset = ui->spinBox_tdc_window_offset->value();
 
     setFileName();
 
@@ -98,17 +125,6 @@ void tdc::on_pushButton_tdc_start_run_clicked()
         QTextStream stream(&file);
 
 
-        // check config of trigger window and set it
-        if (tdcWindowOffset + tdcWindowWidth < 0) { //1st case: the trigger matching window precedes the trigger arrival
-            if (-tdcWindowOffset > 102375 || tdcWindowOffset == 0) {
-                qDebug() << "false";
-                return;
-            }
-        }
-        else if (tdcWindowOffset + tdcWindowWidth > 1000) { // 2nd case: the trigger matching is straddling the trigger or delayed with respect to the trigger
-            qDebug() << "false";
-            return;
-        }
 
         bool goodConfig = module->setTriggerMode(tdcWindowWidth, tdcWindowOffset);
         if (!goodConfig) {
