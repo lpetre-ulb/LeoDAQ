@@ -341,7 +341,7 @@ bool TDCModule::setTriggerMode(uint16_t windowWidth, int16_t windowOffset)
 
 }
 
-void TDCModule::readEvents(std::vector<int>* values)
+void TDCModule::readEvents(std::vector<long>* values)
 {
     uint16_t value16;
     uint32_t value32;
@@ -374,7 +374,7 @@ void TDCModule::readEvents(std::vector<int>* values)
             header = ((value32 >> 27) & 0x1F);
             if (header == 0x1) { // TDC header
                 int nChannel = 0;
-                int tdcTimes[16];
+                long tdcTimes[16];
                 QString output = "";
                 while (true) {
                     ret = CAENVME_ReadCycle(handleChef, baseAddress + 0x0000, &value32, cvA32_U_DATA, cvD32);
@@ -388,6 +388,7 @@ void TDCModule::readEvents(std::vector<int>* values)
                         break; // if not TDC measurement
                     }
                     int channel = ((value32 >> 21) & 0x1F);
+                    qDebug() << "tdc time: " << (value32 & 0x1FFFFF);
                     int tdcTime = (value32 & 0x1FFFFF) * 25;
                     output += QString::number(channel) + " " + QString::number(tdcTime) + "\n";
                     if (channel == startChannel || channel == stopChannel) {
@@ -398,7 +399,7 @@ void TDCModule::readEvents(std::vector<int>* values)
                 if (nChannel == 2) {
                     //qDebug() << output;
                     output += "\n";
-                    double difference = (tdcTimes[stopChannel] - tdcTimes[startChannel])/1000.0;
+                    long difference = (tdcTimes[stopChannel] - tdcTimes[startChannel]);
                     //if (difference < 0) {
                     //    difference += 52429.500;
                     //}

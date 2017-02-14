@@ -34,7 +34,7 @@ public:
     bool setTriggerMode(uint16_t windowWidth, int16_t windowOffset);
     void setStartStopChannels(int start, int stop);
 
-    void readEvents(std::vector<int>* values);
+    void readEvents(std::vector<long> *values);
     void setTriggerAcquisitionMode();
     void setContinuousAcquisitionMode();
     void setWindowWidth(uint16_t);

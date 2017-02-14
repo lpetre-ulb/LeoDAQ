@@ -141,13 +141,13 @@ void tdc::on_pushButton_tdc_start_run_clicked()
         while (isRunning) {
             QCoreApplication::processEvents();
 
-            std::vector<int> values;
+            std::vector<long> values;
             module->readEvents(&values);
             int nEvents = values.size();
             //if (nEvents > 0) qDebug() << "Number of events: " << nEvents;
             for (int i = 0; i < nEvents; ++i) {
-                updateStatUiAndPlot(values[i]);
-                stream << QString::number(values[i]) << "\n";
+                updateStatUiAndPlot(values[i]/1000.0);
+                stream << QString::number(values[i]/1000.0) << "\n";
             }
 
         }

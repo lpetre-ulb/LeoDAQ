@@ -86,13 +86,29 @@ void graph::addPoint(double x_, double y_, double ey_)
     qcp->replot();
 }
 
+void graph::addPoint(double x_, double y_, double eylow_, double eyhigh_)
+{
+
+    nPoints++;
+    x.push_back(x_);
+    y.push_back(y_);
+    eylow.push_back(eylow_);
+    eyhigh.push_back(eyhigh_);
+
+
+    qcp->graph(0)->clearData();
+    qcp->graph(0)->setDataValueError(x, y, eylow, eyhigh);
+    qcp->yAxis->setRange(0, 1.2);
+    qcp->replot();
+}
+
 void graph::addEfficiencyPoint(double x_, uint num_, uint den_)
 {
     if (den_ != 0) {
-        addPoint(x_, num_*1.0/den_, sqrt(num_)*1.0/den_);
+        addPoint(x_, num_*1.0/den_, sqrt(num_*(1-num_*1.0/den_))*1.0/den_);
     }
     else {
-        qDebug() << "Division by 0, denominator was null, skipin this point";
+        qDebug() << "Division by 0, denominator was null, skiping this point";
     }
 }
 
