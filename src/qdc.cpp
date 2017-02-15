@@ -153,13 +153,22 @@ void qdc::on_pushButton_qdc_startprofile_clicked()
     setFileName();
     QString fileName = ui->lineEdit_qdc_file_name->text();
 
+
     QFile file(fileName);
+
     if (!file.open(QIODevice::ReadWrite | QIODevice::Append)) {
         qDebug() << "Problem opening or creating the file:";
         qDebug() << fileName;
     }
     else {
+          long long nEvents = 0;
           QTextStream stream(&file);
+          QDateTime startTime;
+          QDateTime stopTime;
+          //get current date
+          startTime = QDateTime::currentDateTime();
+          stream << "# Started at: " << startTime.toString() << "\n";
+
           // first clear the buffer
           module->ClearChannels();
           // then take data
@@ -175,12 +184,19 @@ void qdc::on_pushButton_qdc_startprofile_clicked()
               } while(!validData && nExp != 0);
 
               if (validData) {
+                  nEvents++;
                   hQDC->updatePlot(value32);
                   stream << QString::number(value32) << "\n";
 
               }
           }
+          stopTime = QDateTime::currentDateTime();
+
+          stream << "# Stoped at: " << stopTime.toString() << "\n";
+          stream << "# Run time: " << (startTime.msecsTo(stopTime)) << " ms\n";
+          stream << "# Number of events: " << nEvents;
     }
+
     file.close();
     qDebug() << "File is closed";
 
