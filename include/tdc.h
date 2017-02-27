@@ -68,7 +68,7 @@ private:
 
     histogram *hTDC;
 
-    QTime time, prevTime;
+    QDateTime time, prevTime;
     int counter;
     double mean_arrival;
     double mean_arrival_square;

@@ -174,7 +174,7 @@ void tdc::updateStatUiAndPlot(double difference)
         ui->lcdNumber_tdc_total->display(counter);
 
         // rate estimate
-        QTime currentTime = QTime::currentTime();
+        QDateTime currentTime = QDateTime::currentDateTime();
         long long timeFromBeginingOfRun = time.msecsTo(currentTime);
 
         double rate = counter * 1000.0 / timeFromBeginingOfRun;
@@ -216,7 +216,7 @@ void tdc::updateStatUiAndPlot(double difference)
 
 void tdc::resetCounters()
 {
-    time = QTime::currentTime();
+    time = QDateTime::currentDateTime();
     counter = 0;
     prevTime = time;
     mean_arrival = 0;
@@ -331,20 +331,14 @@ void tdc::on_spinBox_tdc_stop_valueChanged(int stopChannel)
 
 void tdc::setFileName()
 {
-     //get current date
-     QDate date = QDate::currentDate();
-     QString dateString = date.toString();
-     qDebug() << dateString.replace(" ", "_");
 
      //get current time
-     QTime time = QTime::currentTime();
+     QDateTime time = QDateTime::currentDateTime();
      QString timeString = time.toString();
      qDebug() << timeString.replace(":", "_");
 
      QString fileNameTmp = QStandardPaths::locate(QStandardPaths::DocumentsLocation, QString(), QStandardPaths::LocateDirectory);
      fileNameTmp += "Data_";
-     fileNameTmp += dateString;
-     fileNameTmp += "_at_";
      fileNameTmp += timeString;
      fileNameTmp += ".txt";
      qDebug() << "This is the location: ";
