@@ -16,6 +16,11 @@ scaler::scaler(QWidget *parent, int handleChef_) :
     updateBaseAddress(ui->spinBox_scaler_rotary_switches->value());
     ui->comboBox_scaler_unit->setCurrentIndex(3);
     setPulserMode(ui->spinBox_scaler_width->value(), ui->comboBox_scaler_unit->currentIndex());
+}
+
+void scaler::on_comboBox_scaler_unit_currentIndexChanged(int unitIndex)
+{
+    setPulserMode(ui->spinBox_scaler_width->value(), CVTimeUnits(unitIndex));
 
     hScaler = new histogram(ui->qcp_scaler, "Poisson Distribution", "count", "# events");
     hScaler->adjustPlot(ui->spinBox_scaler_nbins->value(), ui->doubleSpinBox_scaler_cmin->value(), ui->doubleSpinBox_scaler_cmax->value());
@@ -77,6 +82,7 @@ void scaler::on_pushButton_scaler_pulse_clicked()
     ui->spinBox_scaler_width->setEnabled(false);
     ui->comboBox_scaler_unit->setEnabled(false);
 
+    setPulserMode(ui->spinBox_scaler_width->value(), ui->comboBox_scaler_unit->currentIndex());
     double truePeriod = module->getTruePulsePeriod();
     module->startPulser();
 
@@ -174,6 +180,7 @@ void scaler::on_pushButton_scaler_poisson_clicked()
     ui->pushButton_scaler_poisson->setEnabled(false);
     ui->pushButton_sclaer_stop->setEnabled(true);
 
+    setPulserMode(ui->spinBox_scaler_width->value(), ui->comboBox_scaler_unit->currentIndex());
     double truePeriod = module->getTruePulsePeriod();
 
     nExp = ui->spinBox_scaler_nevents->value();
