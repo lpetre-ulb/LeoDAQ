@@ -26,6 +26,7 @@ void scaler::on_comboBox_scaler_unit_currentIndexChanged(int unitIndex)
     hScaler->adjustPlot(ui->spinBox_scaler_nbins->value(), ui->doubleSpinBox_scaler_cmin->value(), ui->doubleSpinBox_scaler_cmax->value());
 
     nExp = ui->spinBox_scaler_nevents->value();
+
 }
 
 scaler::~scaler()
@@ -110,12 +111,6 @@ void scaler::on_spinBox_scaler_width_valueChanged(int width)
 {
     setPulserMode(width, CVTimeUnits(ui->comboBox_scaler_unit->currentIndex()));
 }
-
-void scaler::on_comboBox_scaler_unit_currentIndexChanged(int unitIndex)
-{
-    setPulserMode(ui->spinBox_scaler_width->value(), CVTimeUnits(unitIndex));
-}
-
 
 void scaler::on_pushButton_scaler_update_clicked()
 {
