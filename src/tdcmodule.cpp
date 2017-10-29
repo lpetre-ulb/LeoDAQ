@@ -174,14 +174,6 @@ void TDCModule::readAcqMode()
 bool TDCModule::setTriggerMode(uint16_t windowWidth, int16_t windowOffset)
 {
 
-    readConfig();
-    //setTriggerAcquisitionMode();
-    readAcqMode();
-
-    tdcWindowWidth = windowWidth;
-    tdcWindowOffset = windowOffset;
-
-
     if (tdcWindowOffset + tdcWindowWidth < 0) { //1st case: the trigger matching window precedes the trigger arrival
         if (-tdcWindowOffset > 102375 || tdcWindowOffset == 0) return false;
     }
@@ -189,115 +181,19 @@ bool TDCModule::setTriggerMode(uint16_t windowWidth, int16_t windowOffset)
         return false;
     }
 
+    tdcWindowWidth = windowWidth;
+    tdcWindowOffset = windowOffset;
+
     setTriggerAcquisitionMode();
     setWindowWidth(windowWidth);
     setWindowOffset(windowOffset);
 
-    readConfig();
+    qInfo() << "Checking trigger window...";
     readAcqMode();
+    readConfig();
+    qInfo() << "Good to go !";
 
-    //uint16_t value16;
-
-    //setWindowWidth(tdcWindowWidth / 25);
-    /*
-    // set window width
-    waitForWriteOK();
-    value16 = 0x1000; // OPCODE 10XX set window width
-
-    CVErrorCodes ret = CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
-    if (ret != cvSuccess) {
-        qWarning() << "Error while trying to write set window width opcode:";
-        qWarning() << "Error code is: " << ret;
-        qWarning() << "Meaning: " << CAENVME_DecodeError(ret);
-	return false;
-    }
-
-    waitForWriteOK();
-    qInfo() << tdcWindowWidth;
-    value16 = tdcWindowWidth / 25;
-    qInfo() << value16;
-    ret = CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
-    if (ret != cvSuccess) {
-        qWarning() << "Error while trying to write window width:";
-        qWarning() << "Error code is: " << ret;
-        qWarning() << "Meaning: " << CAENVME_DecodeError(ret);
-	return false;
-    }
-    */
-
-    //setWindowOffset((uint16_t)(tdcWindowOffset / 25));
-    /*
-    waitForWriteOK();
-    value16 = 0x1100; // OPCODE 11XX set window offset
-    ret = CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
-    if (ret != cvSuccess) {
-        qWarning() << "Error while trying to write set window offset opcode:";
-        qWarning() << "Error code is: " << ret;
-        qWarning() << "Meaning: " << CAENVME_DecodeError(ret);
-	return false;
-    }
-
-    waitForWriteOK();
-    qInfo() << tdcWindowOffset;
-    value16 = tdcWindowOffset / 25; // cast to unsigned
-    qInfo() << value16;
-    ret = CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
-    if (ret != cvSuccess) {
-        qWarning() << "Error while trying to write window offset:";
-        qWarning() << "Error code is: " << ret;
-        qWarning() << "Meaning: " << CAENVME_DecodeError(ret);
-	return false;
-    }
-    */
-
-    //setExtraSearchWindow();
-    /*
-    waitForWriteOK();
-    value16 = 0x1200; // OPCODE 12XX set extra search margin
-    ret = CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
-    if (ret != cvSuccess) {
-        qWarning() << "Error while trying to write extra search margin opcode:";
-        qWarning() << "Error code is: " << ret;
-        qWarning() << "Meaning: " << CAENVME_DecodeError(ret);
-	return false;
-    }
-
-    waitForWriteOK();
-    value16 = 0x0004; // 0.1 us extra search margin value
-    ret = CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
-    if (ret != cvSuccess) {
-        qWarning() << "Error while trying to write extra search margin:";
-        qWarning() << "Error code is: " << ret;
-        qWarning() << "Meaning: " << CAENVME_DecodeError(ret);
-	return false;
-    }
-    */
-
-    //setRejectMargin();
-    /*
-    waitForWriteOK();
-    value16 = 0x1300; // OPCODE 13XX set reject margin
-    ret = CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
-    if (ret != cvSuccess) {
-        qWarning() << "Error while trying to write set reject margin opcode:";
-        qWarning() << "Error code is: " << ret;
-        qWarning() << "Meaning: " << CAENVME_DecodeError(ret);
-	return false;
-    }
-
-    waitForWriteOK();
-    value16 = 0x0001; // 0.025 us reject margin value
-    ret = CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
-    if (ret != cvSuccess) {
-        qWarning() << "Error while trying to write reject margin:";
-        qWarning() << "Error code is: " << ret;
-        qWarning() << "Meaning: " << CAENVME_DecodeError(ret);
-	return false;
-    }
-    */
-    qWarning() << "Good to go: true";
     return true;
-
 }
 
 void TDCModule::readEvents(std::vector<long>* values)
