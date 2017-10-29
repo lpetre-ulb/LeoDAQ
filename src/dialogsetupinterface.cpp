@@ -62,11 +62,10 @@ void DialogSetupInterface::on_pushButton_cancel_clicked()
 void DialogSetupInterface::on_checkBox_efficiency_tab_stateChanged()
 {
     if (ui->checkBox_efficiency_tab->isChecked()) {
-        if (!ui->checkBox_hv_module->isChecked() || !ui->checkBox_scaler_module->isChecked())
-
+        if (!ui->checkBox_hv_module->isChecked() || !ui->checkBox_scaler_module->isChecked()) {
             ui->checkBox_hv_module->setChecked(true);
             ui->checkBox_scaler_module->setChecked(true);
-
+	}
     }
 }
 

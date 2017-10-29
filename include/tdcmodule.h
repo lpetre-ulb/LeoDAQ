@@ -1,8 +1,8 @@
 #ifndef TDCMODULE_H
 #define TDCMODULE_H
 
+#include <vector>
 #include <QString>
-#include <CAENVMElib.h>
 
 class TDCModule
 {

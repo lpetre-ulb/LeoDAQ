@@ -1,6 +1,7 @@
 #ifndef SCALERMODULE_H
 #define SCALERMODULE_H
 
+#include <vector>
 #include <QString>
 #include <CAENVMElib.h>
 

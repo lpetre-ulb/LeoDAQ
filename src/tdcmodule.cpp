@@ -1,8 +1,11 @@
 #include "tdcmodule.h"
+
+#include <vector>
+#include <iostream>
 #include <unistd.h>
 #include <qdebug.h>
-#include <iostream>
 #include <QThread>
+#include <CAENVMElib.h>
 
 TDCModule::TDCModule(int handleChef_):
     handleChef(handleChef_)
