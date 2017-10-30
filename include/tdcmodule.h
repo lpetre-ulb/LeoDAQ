@@ -18,35 +18,40 @@ private:
 
     // taking data
     uint16_t tdcWindowWidth;
-    int16_t tdcWindowOffset;
+    int32_t tdcWindowOffset;
 
     void waitForReadOK();
     void waitForWriteOK();
 
 
 public:
+    enum Errors {
+        NO_ERROR = 0,
+	WRONG_WINDOW_WIDTH,
+	WRONG_WINDOW_OFFSET,
+	WRONG_CONDITION_ON_DELAYED_TRIGGER
+    };
+
     TDCModule(int handleChef_);
 
     QString setBaseAddress(int baseAddress_);
     QString getFirmwareRevision();
 
     void clear();
-    bool setTriggerMode(uint16_t windowWidth, int16_t windowOffset);
+    Errors setTriggerMode(uint16_t windowWidth, int32_t windowOffset);
     void setStartStopChannels(int start, int stop);
 
     void readEvents(std::vector<long> *values);
     void setTriggerAcquisitionMode();
     void setContinuousAcquisitionMode();
     void setWindowWidth(uint16_t);
-    void setWindowOffset(int16_t);
+    void setWindowOffset(int32_t);
     void setExtraSearchWindow();
     void setRejectMargin();
     void readAcqMode();
     void readConfig();
 
-
 };
 
-
-
 #endif // TDCMODULE_H
+

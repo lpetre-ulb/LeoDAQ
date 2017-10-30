@@ -74,26 +74,13 @@ void tdc::on_pushButton_tdc_clear_tdcs_clicked()
 
 void tdc::on_pushButton_tdc_start_run_clicked()
 {
-
-
     uint16_t tdcWindowWidth = ui->spinBox_tdc_window_width->value();
-    int16_t tdcWindowOffset = ui->spinBox_tdc_window_offset->value();
+    int32_t tdcWindowOffset = ui->spinBox_tdc_window_offset->value();
 
-    // check config of trigger window and set it
-    if (tdcWindowOffset + tdcWindowWidth < 0) { //1st case: the trigger matching window precedes the trigger arrival
-        if (-tdcWindowOffset > 51200 || tdcWindowOffset == 0) {
-            qDebug() << "false";
-            QMessageBox::critical(
-                this,
-                "Bad TDC Trigger Config",
-                "When the whole matching window is in the past, the maximum offset is -51200",
-                QMessageBox::Ok
-            );
-            return;
-        }
-    }
-    else if (tdcWindowOffset + tdcWindowWidth > 1000) { // 2nd case: the trigger matching is straddling the trigger or delayed with respect to the trigger
-        qDebug() << "false";
+    // We try to set window parameters
+    TDCModule::Errors ret = module->setTriggerMode(tdcWindowWidth, tdcWindowOffset);
+
+    if (ret == TDCModule::WRONG_CONDITION_ON_DELAYED_TRIGGER) {
         QMessageBox::critical(
             this,
             "Bad TDC Trigger Config",
@@ -102,7 +89,9 @@ void tdc::on_pushButton_tdc_start_run_clicked()
         );
         return;
     }
-
+    else if (ret != TDCModule::NO_ERROR) {
+        return;
+    }
 
 
     isRunning = true;
@@ -110,8 +99,6 @@ void tdc::on_pushButton_tdc_start_run_clicked()
     ui->pushButton_tdc_stop_run->setEnabled(isRunning);
     ui->widget_tdc_trigger->setEnabled(!isRunning);
     ui->widget_tdc_histogram_config->setEnabled(!isRunning);
-
-
 
     setFileName();
 
@@ -123,14 +110,6 @@ void tdc::on_pushButton_tdc_start_run_clicked()
     }
     else {
         QTextStream stream(&file);
-
-
-
-        bool goodConfig = module->setTriggerMode(tdcWindowWidth, tdcWindowOffset);
-        if (!goodConfig) {
-            qDebug() << "false";
-            return;
-        }
 
         // set channel
         module->setStartStopChannels(ui->spinBox_tdc_start->value(), ui->spinBox_tdc_stop->value());

@@ -83,13 +83,24 @@ void TDCModule::readConfig()
 
 void TDCModule::setTriggerAcquisitionMode()
 {
-        waitForWriteOK();
-
+	// Set trigger acquisition mode itself
         uint16_t value16 = 0x0000;
+        waitForWriteOK();
         CVErrorCodes ret = CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
 
         if (ret != cvSuccess) {
             qWarning() << "Error while trying to write set trigger acquisition mode opcode:";
+            qWarning() << "Error code is: " << ret;
+            qWarning() << "Meaning: " << CAENVME_DecodeError(ret);
+        }
+
+	// Enable substraction of trigger time
+        value16 = 0x1400;
+        waitForWriteOK();
+        ret = CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+
+        if (ret != cvSuccess) {
+            qWarning() << "Error while trying to enable substraction of trigger time:";
             qWarning() << "Error code is: " << ret;
             qWarning() << "Meaning: " << CAENVME_DecodeError(ret);
         }
@@ -121,15 +132,16 @@ void TDCModule::setWindowWidth(uint16_t width)
         CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16b, cvA32_U_DATA, cvD16);
 }
 
-void TDCModule::setWindowOffset(int16_t offset)
+void TDCModule::setWindowOffset(int32_t offset)
 {
-        uint16_t value16;
+	// OPCODE 11XX set window offset
+        uint16_t value16 = 0x1100;
         waitForWriteOK();
-        value16 = 0x1100; // OPCODE 11XX set window offset
         CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+
+	int16_t value16b = static_cast<int16_t>(offset/25);
         waitForWriteOK();
-        value16 = offset / 25; // cast to unsigned
-        CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16, cvA32_U_DATA, cvD16);
+        CAENVME_WriteCycle(handleChef, baseAddress + 0x102E, &value16b, cvA32_U_DATA, cvD16);
 
 }
 
@@ -171,29 +183,30 @@ void TDCModule::readAcqMode()
 }
 
 
-bool TDCModule::setTriggerMode(uint16_t windowWidth, int16_t windowOffset)
+TDCModule::Errors TDCModule::setTriggerMode(uint16_t windowWidth, int32_t windowOffset)
 {
+    if (windowOffset < -51200 || windowOffset > 1000)
+        return WRONG_WINDOW_OFFSET;
+    if (windowWidth < 25 || windowWidth > 51200)
+        return WRONG_WINDOW_WIDTH;
 
-    if (tdcWindowOffset + tdcWindowWidth < 0) { //1st case: the trigger matching window precedes the trigger arrival
-        if (-tdcWindowOffset > 102375 || tdcWindowOffset == 0) return false;
-    }
-    else if (tdcWindowOffset + tdcWindowWidth > 1000) { // 2nd case: the trigger matching is straddling the trigger or delayed with respect to the trigger
-        return false;
-    }
+    // The trigger matching is straddling the trigger or delayed with respect to the trigger
+    if (windowOffset + static_cast<int32_t>(windowWidth) > 1000) {
+        return WRONG_CONDITION_ON_DELAYED_TRIGGER; }
 
     tdcWindowWidth = windowWidth;
     tdcWindowOffset = windowOffset;
 
     setTriggerAcquisitionMode();
-    setWindowWidth(windowWidth);
-    setWindowOffset(windowOffset);
+    setWindowWidth(tdcWindowWidth);
+    setWindowOffset(tdcWindowOffset);
 
-    qInfo() << "Checking trigger window...";
+    qInfo() << "Checking trigger window parameters...";
     readAcqMode();
     readConfig();
     qInfo() << "Good to go !";
 
-    return true;
+    return NO_ERROR;
 }
 
 void TDCModule::readEvents(std::vector<long>* values)

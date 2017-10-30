@@ -491,7 +491,7 @@
      <number>25</number>
     </property>
     <property name="maximum">
-     <number>100000</number>
+     <number>51200</number>
     </property>
     <property name="singleStep">
      <number>25</number>
@@ -510,10 +510,10 @@
      </rect>
     </property>
     <property name="minimum">
-     <number>-50000</number>
+     <number>-51200</number>
     </property>
     <property name="maximum">
-     <number>900</number>
+     <number>1000</number>
     </property>
     <property name="singleStep">
      <number>25</number>
