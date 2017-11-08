@@ -99,8 +99,13 @@
 #include <linux/smp_lock.h>
 #endif
 
+// Correction to rev. 1.5.1
+#if LINUX_VERSION_CODE >= VERSION(4,11,0)
+	#include <linux/sched/signal.h>
+#endif
+
 #include "CAENUSBdrvB.h"
-//
+
 // Rev 0.2: added end
 
 struct v1718_usb_data {
