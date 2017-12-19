@@ -118,8 +118,10 @@ void tdc::on_pushButton_tdc_start_run_clicked()
         resetCounters();
 
         while (isRunning) {
+            // We begin by processing Qt events
             QCoreApplication::processEvents();
 
+	    // Then the TDC events
             std::vector<long> values;
             module->readEvents(&values);
             int nEvents = values.size();
@@ -129,6 +131,8 @@ void tdc::on_pushButton_tdc_start_run_clicked()
                 stream << QString::number(values[i]/1000.0) << "\n";
             }
 
+            // We don't want to loose data if app crash
+	    stream.flush();
         }
     }
     file.close();
