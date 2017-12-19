@@ -1,6 +1,9 @@
 #include "tdc.h"
 #include "ui_tdc.h"
 
+#include <chrono>
+#include <thread>
+
 tdc::tdc(QWidget *parent, int handleChef_) :
     QWidget(parent), ui(new Ui::tdc), isRunning(false)
 {
@@ -132,7 +135,10 @@ void tdc::on_pushButton_tdc_start_run_clicked()
             }
 
             // We don't want to loose data if app crash
-	    stream.flush();
+            stream.flush();
+
+           // As the event rate isn't very high, we sleep a bit
+           std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
     }
     file.close();
